@@ -1,0 +1,88 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid d76badc5-1f0d-4fe6-889f-ca56408e093d)
+
+  (paper "A4")
+
+  (lib_symbols
+  )
+
+
+  (text "Goals:\n- ESP32-C1 based\n- Support for a 24V LiFePo4 solar system in power and power measurement\n- Support on board for 0-2 power measurement channels\n- Support for an optional load cell measurement\n- Support for a micro-SD card for logging\nSecondary\n- Optional support for an LCD\n- Breakout remaining GPIO / comms channels"
+    (at 185.42 33.02 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid ad50162e-5b79-4cfa-86a6-43d35f6d3fc7)
+  )
+
+  (sheet (at 53.34 33.02) (size 27.94 17.78) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 1fe32be5-ab10-4126-a012-3b12c483f6b3)
+    (property "Sheetname" "Power" (at 53.34 32.3084 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "esp32_sensor_power.kicad_sch" (at 53.34 51.3846 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "esp32_sensor_board"
+        (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d" (page "2"))
+      )
+    )
+  )
+
+  (sheet (at 53.34 58.42) (size 27.94 17.78) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 2e97fb24-fa14-4042-a680-b77c254535c3)
+    (property "Sheetname" "Microprocessor" (at 53.34 57.7084 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "esp32_uc.kicad_sch" (at 53.34 76.7846 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "esp32_sensor_board"
+        (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d" (page "3"))
+      )
+    )
+  )
+
+  (sheet (at 127 33.02) (size 27.94 15.24) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 5e470cd3-e557-4472-af09-b387d4471e5d)
+    (property "Sheetname" "Power Measurement" (at 127 32.3084 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "sensor_power_measurement.kicad_sch" (at 127 48.8446 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "esp32_sensor_board"
+        (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d" (page "5"))
+      )
+    )
+  )
+
+  (sheet (at 127 58.42) (size 27.94 17.78) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 7fbfe679-89cc-4470-a0bc-43ba7c1b816f)
+    (property "Sheetname" "Load Cell Sensor" (at 127 57.7084 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "sensor_loadcell.kicad_sch" (at 127 76.7846 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "esp32_sensor_board"
+        (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d" (page "5"))
+      )
+    )
+  )
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)

@@ -1,0 +1,39 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid b86d4fc8-6f89-4d12-8acd-54e33decbc46)
+
+  (paper "A4")
+
+  (lib_symbols
+  )
+
+
+  (text "INA237-Q1\n- 0-85V\n- I2C with 16 addresses\n- 2.7 to 5.5V supply\n- $3.27 ea"
+    (at 195.58 106.68 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 095066fb-a598-40b9-8844-20d8f4546742)
+  )
+  (text "INA219:\n- Limited to +26V" (at 195.58 39.37 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 0c91bf9c-9bd6-4d41-86ae-e7c055243b34)
+  )
+  (text "PAC1720\n- I2C/SMBus\n- 2 channel, bi directional\n- 0-40V\n"
+    (at 195.58 68.58 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 6cca340e-57d4-49b1-bab8-d6fa2824479e)
+  )
+  (text "INA229\n- SPI\n- 0.3 - 85V\n- > $6 each in singles" (at 195.58 93.98 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid a1f52ba7-d80f-4ac0-92a1-c413e3339845)
+  )
+  (text "Analog differential op amp amplifier -> ADC\n- ESP32 ADC is known to be inaccurate\n- Multi-channel ADCs are not hard to come by"
+    (at 195.58 49.53 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid a3441395-9b19-411e-b20b-b4ea5738cc08)
+  )
+  (text "EMC1701\n- High side current and voltage sense\n- 3-24V bus voltage\n- SMBus"
+    (at 195.58 81.28 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid e122f185-08d1-4d70-abdb-d4d7206e2899)
+  )
+)
