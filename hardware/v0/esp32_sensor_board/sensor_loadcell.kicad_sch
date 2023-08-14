@@ -615,15 +615,15 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid de0b8eb5-075f-4de1-b3ad-cd839f9d0708)
   )
+  (label "E_p" (at 132.08 106.68 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid e1034c52-eab9-43df-9b53-c1e6fb657891)
+  )
   (label "SHIELD" (at 48.26 96.52 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid ff6b1105-d74d-41fd-8eeb-e8de7f5405f4)
   )
 
-  (hierarchical_label "E_p" (shape input) (at 132.08 106.68 0) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify left))
-    (uuid 02f3ce06-5cb3-43da-ad26-7e90f5ec50f8)
-  )
   (hierarchical_label "SCK" (shape input) (at 134.62 91.44 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 290804cd-a3e5-41e8-94f8-c3dc7f989529)
@@ -646,7 +646,7 @@
     (property "Value" "Conn_01x05" (at 38.1 102.87 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "" (at 38.1 111.76 0)
+    (property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal" (at 38.1 111.76 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (at 38.1 111.76 0)
@@ -669,7 +669,7 @@
   (symbol (lib_id "Device:C_Small") (at 43.18 172.72 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 3576cb6f-12f7-4226-84ef-9b3810427390)
-    (property "Reference" "C504" (at 45.72 171.4563 0)
+    (property "Reference" "C505" (at 45.72 171.4563 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "DNP" (at 45.72 173.9963 0)
@@ -686,7 +686,7 @@
     (instances
       (project "esp32_sensor_board"
         (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-          (reference "C504") (unit 1)
+          (reference "C505") (unit 1)
         )
       )
     )
@@ -720,7 +720,7 @@
   (symbol (lib_id "Device:C_Small") (at 58.42 172.72 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 641aa226-f378-4e4c-8766-4063595ccbd4)
-    (property "Reference" "C505" (at 60.96 171.4563 0)
+    (property "Reference" "C506" (at 60.96 171.4563 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "DNP" (at 60.96 173.9963 0)
@@ -737,7 +737,7 @@
     (instances
       (project "esp32_sensor_board"
         (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-          (reference "C505") (unit 1)
+          (reference "C506") (unit 1)
         )
       )
     )
@@ -746,7 +746,7 @@
   (symbol (lib_id "power:GND") (at 129.54 116.84 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 6697c6ab-8091-453b-a2e0-28e488dbb8a6)
-    (property "Reference" "#PWR0505" (at 129.54 123.19 0)
+    (property "Reference" "#PWR0507" (at 129.54 123.19 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 129.54 121.92 0)
@@ -762,7 +762,7 @@
     (instances
       (project "esp32_sensor_board"
         (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-          (reference "#PWR0505") (unit 1)
+          (reference "#PWR0507") (unit 1)
         )
       )
     )
@@ -771,7 +771,7 @@
   (symbol (lib_id "Device:C_Small") (at 142.24 104.14 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 789c2748-8b5c-4b9e-a263-57a14226f8ec)
-    (property "Reference" "C503" (at 144.78 102.8763 0)
+    (property "Reference" "C504" (at 144.78 102.8763 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "1uF" (at 144.78 105.4163 0)
@@ -788,7 +788,7 @@
     (instances
       (project "esp32_sensor_board"
         (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-          (reference "C503") (unit 1)
+          (reference "C504") (unit 1)
         )
       )
     )
@@ -797,7 +797,7 @@
   (symbol (lib_id "power:GND") (at 109.22 124.46 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 7c290d3e-ecea-46df-87cd-1d5616c1f9ca)
-    (property "Reference" "#PWR0504" (at 109.22 130.81 0)
+    (property "Reference" "#PWR0508" (at 109.22 130.81 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 109.22 129.54 0)
@@ -813,7 +813,7 @@
     (instances
       (project "esp32_sensor_board"
         (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-          (reference "#PWR0504") (unit 1)
+          (reference "#PWR0508") (unit 1)
         )
       )
     )
@@ -848,7 +848,7 @@
   (symbol (lib_id "power:+3.3V") (at 111.76 78.74 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid ad3c8f9e-d8ba-4e30-8834-8f5d878f2aeb)
-    (property "Reference" "#PWR0508" (at 111.76 82.55 0)
+    (property "Reference" "#PWR0506" (at 111.76 82.55 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 111.76 73.66 0)
@@ -864,7 +864,7 @@
     (instances
       (project "esp32_sensor_board"
         (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-          (reference "#PWR0508") (unit 1)
+          (reference "#PWR0506") (unit 1)
         )
       )
     )
@@ -873,7 +873,7 @@
   (symbol (lib_id "power:GND") (at 76.2 63.5 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid ae017f13-abcf-4a7f-9de3-7f17fe4142a5)
-    (property "Reference" "#PWR0507" (at 76.2 69.85 0)
+    (property "Reference" "#PWR0505" (at 76.2 69.85 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 76.2 68.58 0)
@@ -889,7 +889,7 @@
     (instances
       (project "esp32_sensor_board"
         (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-          (reference "#PWR0507") (unit 1)
+          (reference "#PWR0505") (unit 1)
         )
       )
     )
@@ -963,7 +963,7 @@
   (symbol (lib_id "Device:C_Small") (at 38.1 58.42 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid c40c46ca-3d6c-4347-99ec-eacaf006798e)
-    (property "Reference" "C502" (at 40.64 57.1563 0)
+    (property "Reference" "C503" (at 40.64 57.1563 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "1uF" (at 40.64 59.6963 0)
@@ -980,7 +980,7 @@
     (instances
       (project "esp32_sensor_board"
         (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-          (reference "C502") (unit 1)
+          (reference "C503") (unit 1)
         )
       )
     )
@@ -989,7 +989,7 @@
   (symbol (lib_id "power:GND") (at 60.96 63.5 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid c648d2e1-80a8-4eff-9539-351ab0237cda)
-    (property "Reference" "#PWR0506" (at 60.96 69.85 0)
+    (property "Reference" "#PWR0504" (at 60.96 69.85 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 60.96 68.58 0)
@@ -1005,7 +1005,7 @@
     (instances
       (project "esp32_sensor_board"
         (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-          (reference "#PWR0506") (unit 1)
+          (reference "#PWR0504") (unit 1)
         )
       )
     )
@@ -1014,7 +1014,7 @@
   (symbol (lib_id "Device:C_Small") (at 27.94 58.42 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid f0f186b8-948a-4cc8-99d1-12d2a982da5a)
-    (property "Reference" "C506" (at 30.48 57.1563 0)
+    (property "Reference" "C502" (at 30.48 57.1563 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "1uF" (at 30.48 59.6963 0)
@@ -1031,7 +1031,7 @@
     (instances
       (project "esp32_sensor_board"
         (path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-          (reference "C506") (unit 1)
+          (reference "C502") (unit 1)
         )
       )
     )
@@ -1071,7 +1071,7 @@
     (property "Value" "Conn_01x05" (at 38.1 82.55 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "" (at 38.1 91.44 0)
+    (property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal" (at 38.1 91.44 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (at 38.1 91.44 0)
