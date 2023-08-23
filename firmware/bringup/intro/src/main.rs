@@ -13,6 +13,7 @@ use esp_idf_hal::{
     peripherals::Peripherals,
     prelude::*,
 };
+use esp_idf_svc::{eventloop::EspSystemEventLoop, nvs::EspDefaultNvsPartition, wifi::BlockingWifi, wifi::EspWifi};
 use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use log::*;
 use shared_bus::{BusManagerSimple, I2cProxy};
@@ -47,6 +48,10 @@ fn calculate_rh(data: &[u8; 6]) -> f32 {
     rh
 }
 
+// fn init_wifi(peripherals: &Peripherals) {
+
+// }
+
 fn main() {
     // It is necessary to call this function once. Otherwise some patches to the runtime
     // implemented by esp-idf-sys might not link properly. See https://github.com/esp-rs/esp-idf-template/issues/71
@@ -55,6 +60,20 @@ fn main() {
     esp_idf_svc::log::EspLogger::initialize_default();
 
     let peripherals = Peripherals::take().unwrap();
+
+    let sys_loop = EspSystemEventLoop::take().unwrap();
+    let nvs = EspDefaultNvsPartition::take().unwrap();
+
+    let mut wifi = BlockingWifi::wrap(
+        EspWifi::new(peripherals.modem, sys_loop.clone(), Some(nvs)).unwrap(),
+        sys_loop,
+    ).unwrap();
+
+    let scan_result = wifi.scan().unwrap();
+
+    info!("Scan Result: {:?}", scan_result);
+
+    // init_wifi(&peripherals);
 
     let scl = peripherals.pins.gpio5;
     let sda = peripherals.pins.gpio4;
