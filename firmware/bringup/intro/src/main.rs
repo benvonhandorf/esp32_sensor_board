@@ -16,7 +16,7 @@ use esp_idf_hal::{
 use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use log::*;
 use shared_bus::{BusManagerSimple, I2cProxy};
-use shtcx::{self, PowerMode as shtPowerMode};
+use sht4x::Sht4x;
 
 fn scan_i2c_bus(bus: &mut impl embedded_hal::blocking::i2c::Write) {
     let address_range = 0x00..=0x7F;
@@ -31,21 +31,6 @@ fn scan_i2c_bus(bus: &mut impl embedded_hal::blocking::i2c::Write) {
     }
 }
 
-fn calculate_t_c(data: &[u8; 6]) -> f32 {
-    let s_t = u16::from_be_bytes([data[0], data[1]]);
-    // let s_t: u16 = u16::from(data[0]) << 8 + u16::from(data[1]);
-    let t = -45. + 175. * (s_t as f32) / 65535. ;
-
-    t
-}
-
-fn calculate_rh(data: &[u8; 6]) -> f32 {
-    let s_rh = u16::from_be_bytes([data[3], data[4]]);
-    // let s_rh: u16 = u16::from(data[3]) << 8 + u16::from(data[4]);
-    let rh = -6. + 125. * (s_rh as f32)/65535. ;
-
-    rh
-}
 
 fn main() {
     // It is necessary to call this function once. Otherwise some patches to the runtime
@@ -73,67 +58,25 @@ fn main() {
 
     let mut message_6: [u8; 6] = [0; 6];
 
-    loop {
-        proxy_sht.write(0x44, &[0x89]).unwrap();
 
-        FreeRtos.delay_ms(10u32);
-
-        let r = proxy_sht.read(0x44, &mut message_6);
-
-        if r.is_ok() {
-            info!(
-                "SN Response: {:02x} {:02x} {:02x} {:02x} {:02x} {:02x}",
-                message_6[0], message_6[1], message_6[2], message_6[3], message_6[4], message_6[5]
-            );
-        } else {
-            warn!("Error: {}", r.err().unwrap())
-        }
-
-        FreeRtos.delay_ms(1000u32);
-
-        proxy_sht.write(0x44, &[0xF6]).unwrap();
-
-        FreeRtos.delay_ms(10u32);
-
-        let r = proxy_sht.read(0x44, &mut message_6);
-
-        if r.is_ok() {
-            info!(
-                "TH Response: {:02x} {:02x} {:02x} {:02x} {:02x} {:02x} : {:.02} {:0.02}",
-                message_6[0], message_6[1], message_6[2], message_6[3], message_6[4], message_6[5],
-                calculate_t_c(&message_6), calculate_rh(&message_6), 
-            );
-        } else {
-            warn!("Error: {}", r.err().unwrap())
-        }
-
-        FreeRtos.delay_ms(1000u32);
-    }
+    let mut clocks = ClockControl::boot_defaults(system.clock_control).freeze();
+    let mut delay = Delay::new(&clocks);
 
     //For SHT40-AD1B, use address 0x44
-    let mut sht_sensor = shtcx::generic(proxy_sht, 0x44);
+    let mut sht40 = Sht4x::new(i2c);
 
-    let device_id = sht_sensor.device_identifier().unwrap();
+    let device_id = sht40.serial_number(&mut delay);
 
     info!("SHT40 Sensor Device Id: {:#02x}", device_id);
 
     loop {
-        scan_i2c_bus(&mut proxy_scan);
-
-        sht_sensor
-            .start_measurement(shtPowerMode::NormalMode)
-            .unwrap();
-
-        FreeRtos.delay_ms(100u32);
-
-        let sht_measturement = sht_sensor.get_measurement_result().unwrap();
-
+        let measurement = sht40.measure(Precision::Low, &mut delay);
         info!(
             "Temp: {:.2}\tHumidity: {:.2}",
-            sht_measturement.temperature.as_degrees_celsius(),
-            sht_measturement.humidity.as_percent()
+            measurement.temperature_celsius(),
+            measurement.humidity_percent()
         );
 
-        FreeRtos.delay_ms(800u32);
+        FreeRtos.delay_ms(1000u32);
     }
 }

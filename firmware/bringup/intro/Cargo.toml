@@ -33,7 +33,7 @@ esp-idf-sys = { version = "0.33", default-features = false }
 esp-idf-hal = { version = "0.41", optional = true, default-features = false }
 esp-idf-svc = { version = "0.46", optional = true, default-features = false }
 embedded-svc = { version = "0.25", optional = true, default-features = false }
-shtcx = "0.11.0"
+sht4x = "0.1.0"
 anyhow = "1.0.72"
 embedded-hal = "0.2.7"
 shared-bus = "0.2.5"
