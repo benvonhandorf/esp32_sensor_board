@@ -1676,7 +1676,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid c79e695b-76a9-4898-a110-d43d1cc55947)
   )
-  (text "RF:\nExternal antenna or PCB ant?" (at 30.48 116.84 0)
+  (text "RF:\nExternal antenna connector\n" (at 30.48 116.84 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid e346f9c7-60d7-4b52-8b2c-28438f019131)
   )
