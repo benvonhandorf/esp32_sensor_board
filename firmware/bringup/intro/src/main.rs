@@ -78,24 +78,24 @@ fn main() {
     let mut message_6: [u8; 6] = [0; 6];
 
 
-    let mut clocks = ClockControl::boot_defaults(system.clock_control).freeze();
-    let mut delay = Delay::new(&clocks);
+    // let mut clocks = ClockControl::boot_defaults(system.clock_control).freeze();
+    // let mut delay = Delay::new(&clocks);
 
     //For SHT40-AD1B, use address 0x44
-    let mut sht40 = Sht4x::new(i2c);
+    // let mut sht40 = Sht4x::new(i2c);
 
-    let device_id = sht40.serial_number(&mut delay);
+    // let device_id = sht40.serial_number(&mut delay);
 
-    info!("SHT40 Sensor Device Id: {:#02x}", device_id);
+    // info!("SHT40 Sensor Device Id: {:#02x}", device_id);
 
-    loop {
-        let measurement = sht40.measure(Precision::Low, &mut delay);
-        info!(
-            "Temp: {:.2}\tHumidity: {:.2}",
-            measurement.temperature_celsius(),
-            measurement.humidity_percent()
-        );
+    // loop {
+    //     let measurement = sht40.measure(Precision::Low, &mut delay);
+    //     info!(
+    //         "Temp: {:.2}\tHumidity: {:.2}",
+    //         measurement.temperature_celsius(),
+    //         measurement.humidity_percent()
+    //     );
 
-        FreeRtos.delay_ms(1000u32);
-    }
+    //     FreeRtos.delay_ms(1000u32);
+    // }
 }
