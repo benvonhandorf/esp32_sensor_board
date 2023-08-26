@@ -7,13 +7,22 @@ use embedded_hal::{
         _embedded_hal_blocking_i2c_Read
     }
 };
+use embedded_svc:: {
+    wifi::Configuration,
+    wifi::ClientConfiguration,
+};
 use esp_idf_hal::{
     delay::FreeRtos,
     i2c::{I2cConfig, I2cDriver},
     peripherals::Peripherals,
     prelude::*,
 };
-use esp_idf_svc::{eventloop::EspSystemEventLoop, nvs::EspDefaultNvsPartition, wifi::BlockingWifi, wifi::EspWifi};
+use esp_idf_svc::{
+    eventloop::EspSystemEventLoop, 
+    nvs::EspDefaultNvsPartition, 
+    wifi::BlockingWifi, 
+    wifi::EspWifi,
+};
 use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use log::*;
 use shared_bus::{BusManagerSimple, I2cProxy};
@@ -50,13 +59,21 @@ fn main() {
     let nvs = EspDefaultNvsPartition::take().unwrap();
 
     let mut wifi = BlockingWifi::wrap(
-        EspWifi::new(peripherals.modem, sys_loop.clone(), Some(nvs)).unwrap(),
+        EspWifi::new(peripherals.modem, sys_loop.clone(), None).unwrap(),
         sys_loop,
     ).unwrap();
 
-    let scan_result = wifi.scan().unwrap();
+    wifi.set_configuration(&Configuration::Client(ClientConfiguration::default()));
 
-    info!("Scan Result: {:?}", scan_result);
+    wifi.start().unwrap();
+
+    let scan_result = wifi.scan();
+
+    if scan_result.is_err() {
+        error!("Scan Failed: {:x?}", scan_result);
+    }
+
+    info!("Scan Result: {:?}", scan_result.unwrap());
 
     // init_wifi(&peripherals);
 
