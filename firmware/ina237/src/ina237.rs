@@ -5,6 +5,7 @@ extern crate embedded_hal;
 use embedded_hal::blocking::i2c;
 
 use crate::types::Configuration;
+use crate::commands::Registers;
 use core::fmt;
 
 pub struct Ina237<I2C> {
@@ -26,6 +27,21 @@ where
             configuration: configuration,
         }
     }
+
+    fn write_register(&self, register: Registers, data: u8[2]) {
+
+    }
+
+    fn select_register(&self, register: Registers) {
+        
+    }
+
+    fn read_register(&self, register: Registers) {
+        self.select_register(register);
+
+        
+    }
+
 
     pub fn initialize(&self, mode: Mode) {
 
