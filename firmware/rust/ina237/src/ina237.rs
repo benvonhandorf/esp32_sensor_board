@@ -5,7 +5,7 @@ extern crate embedded_hal;
 use embedded_hal::blocking::i2c;
 
 use crate::types::Configuration;
-use crate::commands::Registers;
+use crate::types::ConfigurationRegisterValues;
 use core::fmt;
 
 pub struct Ina237<I2C> {
@@ -13,8 +13,23 @@ pub struct Ina237<I2C> {
     configuration: Configuration,
 }
 
-pub enum Mode {
-    Continuous
+enum Registers {
+    Config = 0x00,
+    AdcConfig = 0x01,
+    ShuntCal = 0x02,
+    VShunt = 0x04,
+    VBus = 0x05,
+    DieTemp = 0x06,
+    Current = 0x07,
+    Power = 0x08,
+    DiagAlert = 0x09,
+    SOVL = 0x0C,
+    SUVL = 0x0D,
+    BOVL = 0x0E,
+    BUVOL = 0x0F,
+    TempLimit = 0x10,
+    PowerLimit = 0x11,
+    ManufacturerId = 0x3E,
 }
 
 impl<I2C, E> Ina237<I2C>
@@ -28,7 +43,7 @@ where
         }
     }
 
-    fn write_register(&self, register: Registers, data: u8[2]) {
+    fn write_register(&self, register: Registers, data: &[u8; 2]) {
 
     }
 
@@ -42,8 +57,7 @@ where
         
     }
 
-
-    pub fn initialize(&self, mode: Mode) {
+    pub fn initialize(&self, configuration_register_values: ConfigurationRegisterValues) {
 
     }
 }
