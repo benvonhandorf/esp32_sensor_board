@@ -1,0 +1,2 @@
+/home/benvh/projects/esp32_sensor_board/firmware/cpp/sdcard-test/build/CMakeFiles/edit_cache.dir
+/home/benvh/projects/esp32_sensor_board/firmware/cpp/sdcard-test/build/CMakeFiles/rebuild_cache.dir

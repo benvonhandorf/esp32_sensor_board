@@ -3,9 +3,9 @@
     "GenerationSoftware": {
       "Vendor": "KiCad",
       "Application": "Pcbnew",
-      "Version": "7.0.6-7.0.6~ubuntu22.04.1"
+      "Version": "7.0.7-7.0.7~ubuntu22.04.1"
     },
-    "CreationDate": "2023-07-31T15:47:25-04:00"
+    "CreationDate": "2023-10-05T15:00:09-04:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -24,8 +24,8 @@
   "DesignRules": [
     {
       "Layers": "Outer",
-      "PadToPad": 0.12,
-      "PadToTrack": 0.12,
+      "PadToPad": 0.09,
+      "PadToTrack": 0.09,
       "TrackToTrack": 0.12,
       "MinLineWidth": 0.12,
       "TrackToRegion": 0.2,
@@ -59,6 +59,11 @@
     {
       "Path": "esp32_sensor_board-B_Cu.gbr",
       "FileFunction": "Copper,L4,Bot",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "esp32_sensor_board-F_Adhesive.gbr",
+      "FileFunction": "Glue,Top",
       "FilePolarity": "Positive"
     },
     {

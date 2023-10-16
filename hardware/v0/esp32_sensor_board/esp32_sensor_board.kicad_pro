@@ -45,7 +45,7 @@
         "silk_text_thickness": 0.15,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.24
+          "min_clearance": 0.19999999999999998
         }
       },
       "diff_pair_dimensions": [
@@ -55,15 +55,7 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [
-        "silk_overlap|151812500|110740000|b6768899-b6b3-451b-ba14-5bbcaac89d78|8a8b29ee-6557-4ed3-90f3-c7edb3f1108e",
-        "unconnected_items|121300000|71602500|ec0e2b01-309c-49bf-866c-cba8ae96b4d5|a68d00e3-3754-4f7c-bce7-e842da897e9c",
-        "unconnected_items|123200000|71602500|8de555f1-3dfe-46b1-9651-da1a6dd57418|ec0e2b01-309c-49bf-866c-cba8ae96b4d5",
-        "unconnected_items|125200000|71602500|27cfbd4b-5b08-421a-bf22-9aab2c18e345|8de555f1-3dfe-46b1-9651-da1a6dd57418",
-        "unconnected_items|127100000|71602500|71f7d0ee-bba9-401b-bd68-5bf077d99c01|1171ae52-ec64-4dc9-9bae-a4ee1a01c374",
-        "unconnected_items|127100000|71602500|71f7d0ee-bba9-401b-bd68-5bf077d99c01|27cfbd4b-5b08-421a-bf22-9aab2c18e345",
-        "unconnected_items|142250000|75250000|bc9c5174-6849-4056-8d06-87f39449e02d|3b0d22e2-363c-4d77-878d-c37217b5aa8a"
-      ],
+      "drc_exclusions": [],
       "meta": {
         "version": 2
       },
