@@ -997,10 +997,6 @@
       (effects (font (size 1.27 1.27)) (justify right))
       (uuid 6f095483-3590-43b4-8b92-10e374276713)
     )
-    (pin "GPIO7" input (at 86.36 71.12 0)
-      (effects (font (size 1.27 1.27)) (justify right))
-      (uuid 1de512b8-322a-4b88-90b2-2faffafab1c5)
-    )
     (pin "SPI_CS1" input (at 53.34 62.23 180)
       (effects (font (size 1.27 1.27)) (justify left))
       (uuid abf347df-d079-48d3-bac9-65899c5d8fe6)
@@ -1020,6 +1016,10 @@
     (pin "VIN" input (at 72.39 58.42 90)
       (effects (font (size 1.27 1.27)) (justify right))
       (uuid 58b5746d-8b1f-43d5-97a5-cef03185d601)
+    )
+    (pin "DATA_READY" input (at 86.36 71.12 0)
+      (effects (font (size 1.27 1.27)) (justify right))
+      (uuid 04f54794-6003-4d3d-8040-316af068b48f)
     )
     (instances
       (project "esp32_sensor_board"
