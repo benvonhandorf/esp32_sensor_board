@@ -1,13 +1,17 @@
 #![feature(never_type)]
 
 use anyhow::Result;
+
+
+use esp_idf_svc;
+use esp_idf_svc::hal::modem;
+use esp_idf_svc::hal as esp_idf_hal;
+use esp_idf_svc::sys as esp_idf_sys;
+use embedded_svc;
+
 use embedded_hal::{
-    prelude:: {
-        _embedded_hal_blocking_i2c_Write, 
-        _embedded_hal_blocking_i2c_WriteRead, 
-        _embedded_hal_blocking_i2c_Read
-    },
-    digital::v2,
+    i2c,
+    digital,
 };
 
 use embedded_svc:: {
@@ -20,7 +24,9 @@ use esp_idf_hal::{
     i2c::{I2cConfig, I2cDriver},
     peripherals::Peripherals,
     prelude::*,
-    spi::*, gpio::*,
+    spi::*, 
+    gpio::*,
+    units::*,
 };
 
 use esp_idf_svc::{
@@ -32,15 +38,15 @@ use esp_idf_svc::{
 
 use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use log::*;
-use shared_bus::{BusManagerSimple, I2cProxy};
+// use shared_bus::{BusManagerSimple, I2cProxy};
 use sht4x:: {
     Sht4x,
     Precision
 };
 
-use embedded_sdmmc::*;
+// use embedded_sdmmc::*;
 
-fn scan_i2c_bus(bus: &mut impl embedded_hal::blocking::i2c::Write) {
+fn i2c_scan(bus: &mut impl embedded_hal::i2c::I2c) {
     let address_range = 0x00..=0x7F;
     let empty_body: [u8; 0] = [];
 
@@ -57,14 +63,34 @@ fn sd_test( ) {
 
 }
 
-// fn init_wifi(peripherals: &Peripherals) {
+fn wifi_scan(wifi: &mut BlockingWifi<EspWifi>) {
+    let scan_result = wifi.scan();
 
-// }
+    if scan_result.is_err() {
+        error!("Scan Failed: {:x?}", scan_result);
+    }
+
+    info!("Scan Result: {:?}", scan_result.unwrap());
+}
+
+fn wifi_init<'a>(wifi_modem: esp_idf_hal::modem::Modem, sys_loop: EspSystemEventLoop) -> BlockingWifi<EspWifi<'a>> {
+    let mut wifi = BlockingWifi::wrap(
+        EspWifi::new(wifi_modem, sys_loop.clone(), None).unwrap(),
+        sys_loop,
+    ).unwrap();
+
+    let _ = wifi.set_configuration(&Configuration::Client(ClientConfiguration::default()));
+
+    wifi.start().unwrap();
+
+    return wifi;
+}
 
 fn main() {
     // It is necessary to call this function once. Otherwise some patches to the runtime
     // implemented by esp-idf-sys might not link properly. See https://github.com/esp-rs/esp-idf-template/issues/71
     esp_idf_sys::link_patches();
+
     // Bind the log crate to the ESP Logging facilities
     esp_idf_svc::log::EspLogger::initialize_default();
 
@@ -98,22 +124,22 @@ fn main() {
     // wdt0.disable();
     // wdt1.disable();
 
-    let mut delay = Delay;
+    let mut delay = Delay::new_default();
 
     let scl = peripherals.pins.gpio5;
     let sda = peripherals.pins.gpio4;
 
     let i2c_config = I2cConfig::new().baudrate(100.kHz().into());
-    let i2c = I2cDriver::new(peripherals.i2c0, sda, scl, &i2c_config).unwrap();
+    let mut i2c_bus = I2cDriver::new(peripherals.i2c0, sda, scl, &i2c_config).unwrap();
 
-    let i2c_bus = BusManagerSimple::new(i2c);
+    // let i2c_bus = BusManagerSimple::new(i2c);
 
-    let mut proxy_scan = i2c_bus.acquire_i2c();
-    let mut proxy_sht = i2c_bus.acquire_i2c();
+    // let mut proxy_scan = i2c_bus.acquire_i2c();
+    // let mut proxy_sht = i2c_bus.acquire_i2c();
 
     info!("I2c Bus Configured");
 
-    scan_i2c_bus(&mut proxy_scan);
+    i2c_scan(&mut i2c_bus);
 
     let spi = peripherals.spi2;
 
@@ -135,69 +161,53 @@ fn main() {
 
     //cargo build --bin launch --features launch --target .vscode --profile debug-no-opt
 
-    let driver_config = SpiDriverConfig::new();
+    // let driver_config = SpiDriverConfig::new();
 
-        info!("Initializing SD Card");
+        // info!("Initializing SD Card");
 
-        let spi_driver = SpiDriver::new(spi,
-        sck,
-        copi,
-        Some(cipo),
-        &driver_config
-        ).unwrap();
+        // let spi_driver = SpiDriver::new(spi,
+        // sck,
+        // copi,
+        // Some(cipo),
+        // &driver_config
+        // ).unwrap();
 
-        info!("Preparing SD Card");
+        // info!("Preparing SD Card");
 
-        let sdcard_config = config::Config::new().baudrate(26.MHz().into());
+        // let sdcard_config = config::Config::new().baudrate(26.MHz().into());
 
-        let sd_device = SpiDeviceDriver::new(
-            &spi_driver,
-            None::<AnyOutputPin>,
-            &sdcard_config
-        ).unwrap();
+        // let sd_device = SpiDeviceDriver::new(
+        //     &spi_driver,
+        //     None::<AnyOutputPin>,
+        //     &sdcard_config
+        // ).unwrap();
 
-        let sdcard = embedded_sdmmc::SdCard::new(sd_device, PinDriver::output(sd_cs).unwrap(), FreeRtos);
+        // let sdcard = embedded_sdmmc::SdCard::new(sd_device, PinDriver::output(sd_cs).unwrap(), FreeRtos);
 
-        info!("SD Card Type: {}", sdcard.get_card_type().unwrap() as u8);
+        // info!("SD Card Type: {}", sdcard.get_card_type().unwrap() as u8);
 
-        info!("SD Card Size: {}", sdcard.num_bytes().unwrap());
+        // info!("SD Card Size: {}", sdcard.num_bytes().unwrap());
 
-    let mut wifi = BlockingWifi::wrap(
-        EspWifi::new(peripherals.modem, sys_loop.clone(), None).unwrap(),
-        sys_loop,
-    ).unwrap();
-
-    let _ = wifi.set_configuration(&Configuration::Client(ClientConfiguration::default()));
-
-    wifi.start().unwrap();
-
-    let scan_result = wifi.scan();
-
-    if scan_result.is_err() {
-        error!("Scan Failed: {:x?}", scan_result);
-    }
-
-    info!("Scan Result: {:?}", scan_result.unwrap());
-
-    // init_wifi(&peripherals);
+    let mut wifi = wifi_init(peripherals.modem, sys_loop);
+    wifi_scan(&mut wifi);
 
     let mut message_6: [u8; 6] = [0; 6];
 
-    // For SHT40-AD1B, use address 0x44
-    let mut sht40 = Sht4x::new(proxy_sht);
+    // // For SHT40-AD1B, use address 0x44
+    // let mut sht40 = Sht4x::new(proxy_sht);
 
-    let device_id = sht40.serial_number(&mut delay).unwrap();
+    // let device_id = sht40.serial_number(&mut delay).unwrap();
 
-    info!("SHT40 Sensor Device Id: {:#02x}", device_id);
+    // info!("SHT40 Sensor Device Id: {:#02x}", device_id);
 
-    loop {
-        let measurement = sht40.measure(Precision::Low, &mut delay).unwrap();
-        info!(
-            "Temp: {:.2}\tHumidity: {:.2}",
-            measurement.temperature_celsius(),
-            measurement.humidity_percent()
-        );
+    // loop {
+    //     let measurement = sht40.measure(Precision::Low, &mut delay).unwrap();
+    //     info!(
+    //         "Temp: {:.2}\tHumidity: {:.2}",
+    //         measurement.temperature_celsius(),
+    //         measurement.humidity_percent()
+    //     );
 
-        FreeRtos::delay_ms(1000u32);
-    }
+    //     FreeRtos::delay_ms(1000u32);
+    // }
 }

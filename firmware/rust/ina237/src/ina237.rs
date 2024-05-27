@@ -87,11 +87,9 @@ mod tests {
 
         let under_test = Ina237::new(i2c, configuration);
 
-        // let under_test = default_instance(i2c);
-
-        // assert_eq!(0x01, under_test.configuration.address);
-        // assert_eq!(2000, under_test.configuration.shunt_cal);
-        // assert_eq!(i2c, under_test.i2c);
+        assert_eq!(0x01, under_test.configuration.address);
+        assert_eq!(2000, under_test.configuration.shunt_cal);
+        assert_eq!(i2c, under_test.i2c);
     }
 
     #[test]
