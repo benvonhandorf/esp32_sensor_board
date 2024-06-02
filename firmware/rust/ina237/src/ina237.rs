@@ -2,7 +2,7 @@
 
 extern crate embedded_hal;
 
-use embedded_hal::blocking::i2c;
+use embedded_hal::i2c;
 
 use crate::types::Configuration;
 use crate::types::ConfigurationRegisterValues;
@@ -34,7 +34,7 @@ enum Registers {
 
 impl<I2C, E> Ina237<I2C>
 where
-    I2C: i2c::Write<Error = E> + i2c::Read<Error = E>,
+    I2C: i2c::I2c<Error = E>
 {
     pub fn new(i2c: I2C, configuration: Configuration) -> Ina237<I2C> {
         Ina237 {
@@ -43,22 +43,33 @@ where
         }
     }
 
-    fn write_register(&self, register: Registers, data: &[u8; 2]) {
-
+    pub fn destroy(self) -> I2C {
+        self.i2c
     }
 
-    fn select_register(&self, register: Registers) {
-        
+    fn write_register(&mut self, register: Registers, data: &[u8; 2]) {
+        let buffer: [u8; 3] = [register as u8, data[0], data[1]];
+
+        self.i2c.write(self.configuration.addr(), &buffer);
     }
 
-    fn read_register(&self, register: Registers) {
-        self.select_register(register);
+    fn read_register(&mut self, register: Registers) -> [u8; 2] {
+        let write_buffer: [u8; 1] = [register as u8];
+        let mut read_buffer: [u8; 2] = [0x00 ; 2];
 
+        self.i2c.write_read(self.configuration.addr(), &write_buffer, &mut read_buffer);
         
+        read_buffer
     }
 
     pub fn initialize(&self, configuration_register_values: ConfigurationRegisterValues) {
 
+    }
+
+    pub fn manufacturer_id(&mut self) -> u16 {
+        let result = self.read_register(Registers::ManufacturerId);
+
+        u16::from_be_bytes(result)
     }
 }
 
@@ -67,7 +78,7 @@ mod tests {
     use super::*;
     extern crate embedded_hal_mock;
 
-    use embedded_hal_mock::{
+    use embedded_hal_mock::eh1:: {
         i2c::{Mock as I2cMock, Transaction as I2cTransaction},
         MockError,
     };
@@ -81,20 +92,23 @@ mod tests {
 
     #[test]
     fn constructor_returns_struct() {
-        let mut i2c = I2cMock::new([]);
+        let i2c = I2cMock::new([]);
 
         let configuration = Configuration::new(0x01, 2000);
 
         let under_test = Ina237::new(i2c, configuration);
 
-        assert_eq!(0x01, under_test.configuration.address);
-        assert_eq!(2000, under_test.configuration.shunt_cal);
-        assert_eq!(i2c, under_test.i2c);
+        assert_eq!(0x01, under_test.configuration.addr());
+        // assert_eq!(2000, under_test.configuration.shunt_cal);
+
+        let mut i2c = under_test.destroy();
+
+        i2c.done()
     }
 
     #[test]
     fn initialize_sets_calibration_register() {
-        let mut i2c = I2cMock::new([]);
+        let i2c = I2cMock::new([]);
 
         let configuration = Configuration::new(0x01, 2000);
 
@@ -105,5 +119,10 @@ mod tests {
         // assert_eq!(0x01, under_test.configuration.address);
         // assert_eq!(2000, under_test.configuration.shunt_cal);
         // assert_eq!(i2c, under_test.i2c);
+
+        let mut i2c = under_test.destroy();
+
+        i2c.done()
+
     }
 }

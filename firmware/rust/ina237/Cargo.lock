@@ -19,15 +19,33 @@ dependencies = [
 ]
 
 [[package]]
-name = "embedded-hal-mock"
-version = "0.9.0"
+name = "embedded-hal"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d22555de87a5696a249f8f0c1b1d50b94f668587d925ac9fdb306aa158bd64db"
+checksum = "361a90feb7004eca4019fb28352a9465666b24f840f5c3cddf0ff13920590b89"
+
+[[package]]
+name = "embedded-hal-mock"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9ab4245377154a91815fc7b070cfc8466b1cf8f8e1fad18755eda20f167d4f58"
 dependencies = [
- "embedded-hal",
+ "embedded-hal 0.2.7",
+ "embedded-hal 1.0.0",
+ "embedded-hal-nb",
  "embedded-time",
- "nb 0.1.3",
+ "nb 1.1.0",
  "void",
+]
+
+[[package]]
+name = "embedded-hal-nb"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fba4268c14288c828995299e59b12babdbe170f6c6d73731af1b4648142e8605"
+dependencies = [
+ "embedded-hal 1.0.0",
+ "nb 1.1.0",
 ]
 
 [[package]]
@@ -43,7 +61,7 @@ dependencies = [
 name = "ina237"
 version = "0.1.0"
 dependencies = [
- "embedded-hal",
+ "embedded-hal 1.0.0",
  "embedded-hal-mock",
 ]
 

@@ -1,8 +1,19 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": "rust/bringup/intro"
+		},
+		{
+			"path": "rust/ina237"
+		},
+		{
+			"path": "../../sht4x"
+		},
+		{
+			"path": "../../sensirion-i2c-rs"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"rust-analyzer.cargo.allTargets": false
+	}
 }

@@ -1,9 +1,19 @@
 #![feature(never_type)]
 
+use std::borrow::BorrowMut;
+use std::ptr::null;
+use std::sync::Mutex;
+
 use anyhow::Result;
 
 
+use embedded_hal::i2c::I2c;
+use embedded_hal::i2c::SevenBitAddress;
+use embedded_hal_bus::i2c::AtomicError;
+use embedded_hal_bus::util::AtomicCell;
 use esp_idf_svc;
+use esp_idf_svc::hal::delay;
+use esp_idf_svc::hal::i2c::I2C0;
 use esp_idf_svc::hal::modem;
 use esp_idf_svc::hal as esp_idf_hal;
 use esp_idf_svc::sys as esp_idf_sys;
@@ -29,6 +39,8 @@ use esp_idf_hal::{
     units::*,
 };
 
+use embedded_hal_bus::i2c::AtomicDevice;
+
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop, 
     nvs::EspDefaultNvsPartition, 
@@ -36,27 +48,62 @@ use esp_idf_svc::{
     wifi::EspWifi,
 };
 
-use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
+use esp_idf_sys as _;
+// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use log::*;
 // use shared_bus::{BusManagerSimple, I2cProxy};
+
 use sht4x:: {
     Sht4x,
     Precision
 };
 
+use ina237::ina237:: {
+    Ina237,
+};
+
 // use embedded_sdmmc::*;
 
-fn i2c_scan(bus: &mut impl embedded_hal::i2c::I2c) {
+fn i2c_scan(i2c_bus_device: &mut AtomicDevice<I2cDriver>) {
     let address_range = 0x00..=0x7F;
     let empty_body: [u8; 0] = [];
 
+    let i2c_bus = i2c_bus_device.borrow_mut();
+
     for address in address_range {
-        let result = bus.write(address, &empty_body);
+        let result = i2c_bus.write(address, &empty_body);
 
         if result.is_ok() {
             info!("Found {:#02x}", address);
+        } else {
+            match result.err() {
+                Some(AtomicError::Busy) => warn!("Unable to scan {:#02x} - Busy", address),
+                Some(AtomicError::Other(e)) => warn!("Unable to scan {:#02x} - {}", address, e),
+                _ => warn!("Unable to scan {:#02x} - Unknown Reason", address),
+            }
         }
     }
+}
+
+fn sht_init<'a>(i2c_bus: AtomicDevice<'a, I2cDriver<'a>> ) -> Sht4x<AtomicDevice<'a, I2cDriver<'a>>, Delay> {
+    // // For SHT40-AD1B, use address 0x44
+    let sht40 = Sht4x::new(i2c_bus);
+
+    return sht40;
+}
+
+fn sht_read(sht_driver: &mut Sht4x<AtomicDevice<I2cDriver>, Delay>, delay:&mut Delay ) {
+// // For SHT40-AD1B, use address 0x44
+    let device_id = sht_driver.serial_number(delay).unwrap();
+
+    info!("SHT40 Sensor Device Id: {:#02x}", device_id);
+
+    let measurement = sht_driver.measure(Precision::High, delay).unwrap();
+    info!(
+        "Temp: {:.2}\tHumidity: {:.2}",
+        measurement.temperature_celsius(),
+        measurement.humidity_percent(),
+    );
 }
 
 fn sd_test( ) {
@@ -86,7 +133,7 @@ fn wifi_init<'a>(wifi_modem: esp_idf_hal::modem::Modem, sys_loop: EspSystemEvent
     return wifi;
 }
 
-fn main() {
+fn main() -> ! {
     // It is necessary to call this function once. Otherwise some patches to the runtime
     // implemented by esp-idf-sys might not link properly. See https://github.com/esp-rs/esp-idf-template/issues/71
     esp_idf_sys::link_patches();
@@ -130,16 +177,41 @@ fn main() {
     let sda = peripherals.pins.gpio4;
 
     let i2c_config = I2cConfig::new().baudrate(100.kHz().into());
-    let mut i2c_bus = I2cDriver::new(peripherals.i2c0, sda, scl, &i2c_config).unwrap();
+    let i2c_bus_raw = I2cDriver::new(peripherals.i2c0, sda, scl, &i2c_config).unwrap();
 
-    // let i2c_bus = BusManagerSimple::new(i2c);
-
-    // let mut proxy_scan = i2c_bus.acquire_i2c();
-    // let mut proxy_sht = i2c_bus.acquire_i2c();
+    let i2c_bus_cell = AtomicCell::new(i2c_bus_raw);
 
     info!("I2c Bus Configured");
 
-    i2c_scan(&mut i2c_bus);
+    {
+        let mut i2c_scan_bus = AtomicDevice::new(&i2c_bus_cell);
+
+        i2c_scan(&mut i2c_scan_bus);
+    }
+
+    {
+        let i2c_sht_bus = AtomicDevice::new(&i2c_bus_cell);
+
+        let mut sht40 = Sht4x::new(i2c_sht_bus);
+
+        let i2c_ina_bus = AtomicDevice::new(&i2c_bus_cell);
+
+        let ina_configuration_a = ina237::types::Configuration::new(0x45, 0x00);
+
+        let mut ina_a = Ina237::new(i2c_ina_bus, ina_configuration_a);
+        // let mut sht_driver = sht_init(i2c_sht_bus);
+
+        loop {
+            sht_read(&mut sht40, &mut delay);
+
+            FreeRtos::delay_ms(1000u32);
+
+            info!(
+                "INA 237 A: {:#04}",
+                ina_a.manufacturer_id(),
+            );
+        }
+    }
 
     let spi = peripherals.spi2;
 
@@ -193,21 +265,7 @@ fn main() {
 
     let mut message_6: [u8; 6] = [0; 6];
 
-    // // For SHT40-AD1B, use address 0x44
-    // let mut sht40 = Sht4x::new(proxy_sht);
+    loop {
 
-    // let device_id = sht40.serial_number(&mut delay).unwrap();
-
-    // info!("SHT40 Sensor Device Id: {:#02x}", device_id);
-
-    // loop {
-    //     let measurement = sht40.measure(Precision::Low, &mut delay).unwrap();
-    //     info!(
-    //         "Temp: {:.2}\tHumidity: {:.2}",
-    //         measurement.temperature_celsius(),
-    //         measurement.humidity_percent()
-    //     );
-
-    //     FreeRtos::delay_ms(1000u32);
-    // }
+    }
 }
