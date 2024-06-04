@@ -49,6 +49,9 @@ use esp_idf_svc::{
 };
 
 use esp_idf_sys as _;
+use ina237::types::AdcAveraging;
+use ina237::types::AdcRange;
+use ina237::types::Mode;
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use log::*;
 // use shared_bus::{BusManagerSimple, I2cProxy};
@@ -173,6 +176,9 @@ fn main() -> ! {
 
     let mut delay = Delay::new_default();
 
+    let mut wifi = wifi_init(peripherals.modem, sys_loop);
+    wifi_scan(&mut wifi);
+
     let scl = peripherals.pins.gpio5;
     let sda = peripherals.pins.gpio4;
 
@@ -196,10 +202,18 @@ fn main() -> ! {
 
         let i2c_ina_bus = AtomicDevice::new(&i2c_bus_cell);
 
-        let ina_configuration_a = ina237::types::Configuration::new(0x45, 0x00);
+        let mut ina_config_registers = ina237::types::ConfigurationRegisterValues::new();
+        ina_config_registers.adc_range = AdcRange::LOW;
+        ina_config_registers.mode = Mode::ContinuousTempShuntBusVoltage;
+        ina_config_registers.adc_averaging = AdcAveraging::Avg64;
+
+        let ina_configuration_a = ina237::types::Configuration::new(0x46, 4000);
 
         let mut ina_a = Ina237::new(i2c_ina_bus, ina_configuration_a);
-        // let mut sht_driver = sht_init(i2c_sht_bus);
+        
+        ina_a.initialize(ina_config_registers);
+
+        info!("INA237 A: Configuration {:#04}", ina_a.configuration());
 
         loop {
             sht_read(&mut sht40, &mut delay);
@@ -207,7 +221,7 @@ fn main() -> ! {
             FreeRtos::delay_ms(1000u32);
 
             info!(
-                "INA 237 A: {:#04}",
+                "INA 237 A: {:#04x}",
                 ina_a.manufacturer_id(),
             );
         }
@@ -260,8 +274,6 @@ fn main() -> ! {
 
         // info!("SD Card Size: {}", sdcard.num_bytes().unwrap());
 
-    let mut wifi = wifi_init(peripherals.modem, sys_loop);
-    wifi_scan(&mut wifi);
 
     let mut message_6: [u8; 6] = [0; 6];
 

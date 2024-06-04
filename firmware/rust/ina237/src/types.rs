@@ -19,6 +19,7 @@ impl Configuration {
     }
 }
 
+#[derive(Clone, Copy)]
 pub enum AdcRange {
     /// 0 = 163.84 mV
     HIGH = 0,
@@ -26,6 +27,7 @@ pub enum AdcRange {
     LOW = 1,
 }
 
+#[derive(Clone, Copy)]
 pub enum Mode {
     SHUTDOWN = 0x00,
     TriggeredBusVoltageSs = 0x01,
@@ -45,6 +47,7 @@ pub enum Mode {
     ContinuousTempShuntBusVoltage = 0x0F,
 }
 
+#[derive(Clone, Copy)]
 pub enum ConversionTime {
     DurationUs50 = 0x00,
     DurationUs84 = 0x01,
@@ -56,6 +59,7 @@ pub enum ConversionTime {
     DurationUs4120 = 0x07,
 }
 
+#[derive(Clone, Copy)]
 pub enum AdcAveraging {
     Avg1 = 0x00,
     Avg4 = 0x01,
@@ -69,25 +73,25 @@ pub enum AdcAveraging {
 
 pub struct ConfigurationRegisterValues {
     /// Force sensor reset
-    reset: bool,
+    pub reset: bool,
     /// Conversion delay, 2ms steps.  Range 0ms - 510ms
-    conversion_delay: u8,
+    pub conversion_delay: u8,
     /// ADC Range.  Default: High
-    adc_range: AdcRange,
+    pub adc_range: AdcRange,
     /// Mode.  Default: CONTINUOUS_TEMP_SHUNT_BUS_VOLTAGE
-    mode: Mode,
+    pub mode: Mode,
     /// ADC Conversion Time for Bus Voltage.  Default: 1052us
-    bus_voltage_conversion_time: ConversionTime,
+    pub bus_voltage_conversion_time: ConversionTime,
     /// ADC Conversion Time for Shunt Voltage.  Default: 1052us
-    shunt_voltage_conversion_time: ConversionTime,
+    pub shunt_voltage_conversion_time: ConversionTime,
     /// ADC Conversion Time for Temperature.  Default: 1052us
-    temperature_conversion_time: ConversionTime,
+    pub temperature_conversion_time: ConversionTime,
     /// ADC Averaging
-    adc_averaging: AdcAveraging,
+    pub adc_averaging: AdcAveraging,
 }
 
 impl ConfigurationRegisterValues {
-    fn new() -> ConfigurationRegisterValues {
+    pub fn new() -> ConfigurationRegisterValues {
         ConfigurationRegisterValues {
             reset : false,
             conversion_delay : 0,
@@ -100,7 +104,7 @@ impl ConfigurationRegisterValues {
         }
     }
 
-    pub fn into_configuration(self) -> u16 {
+    pub fn into_configuration(&self) -> u16 {
         0x0000 | if self.reset {
             0x8000
         } else {
@@ -110,7 +114,7 @@ impl ConfigurationRegisterValues {
         | (self.adc_range as u16) << 4
     }
 
-    pub fn into_adc_configuration(self) -> u16 {
+    pub fn into_adc_configuration(&self) -> u16 {
         0x0000
         | (self.mode as u16 & 0x0F) << 12
         | (self.bus_voltage_conversion_time as u16 & 0x07) << 9

@@ -11,6 +11,9 @@
 		},
 		{
 			"path": "../../sensirion-i2c-rs"
+		},
+		{
+			"path": "rust/nau7802"
 		}
 	],
 	"settings": {

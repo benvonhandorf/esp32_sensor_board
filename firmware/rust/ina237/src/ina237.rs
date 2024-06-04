@@ -34,7 +34,8 @@ enum Registers {
 
 impl<I2C, E> Ina237<I2C>
 where
-    I2C: i2c::I2c<Error = E>
+    I2C: i2c::I2c<Error = E>,
+    E: i2c::Error
 {
     pub fn new(i2c: I2C, configuration: Configuration) -> Ina237<I2C> {
         Ina237 {
@@ -50,20 +51,40 @@ where
     fn write_register(&mut self, register: Registers, data: &[u8; 2]) {
         let buffer: [u8; 3] = [register as u8, data[0], data[1]];
 
-        self.i2c.write(self.configuration.addr(), &buffer);
+        self.i2c.write(self.configuration.addr(), &buffer).unwrap_or_else(|error| {
+            panic!("i2c write failed: {}", error.kind());
+        });
     }
 
     fn read_register(&mut self, register: Registers) -> [u8; 2] {
         let write_buffer: [u8; 1] = [register as u8];
         let mut read_buffer: [u8; 2] = [0x00 ; 2];
 
-        self.i2c.write_read(self.configuration.addr(), &write_buffer, &mut read_buffer);
+        self.i2c.write_read(self.configuration.addr(), &write_buffer, &mut read_buffer).unwrap_or_else(|error|  {
+            panic!("i2c write_read failed: {}", error.kind());
+        });
+
+        // self.i2c.read(self.configuration.addr(), &mut read_buffer).unwrap_or_else(|error|  {
+        //     panic!("i2c read failed: {}", error.kind());
+        // });
         
         read_buffer
     }
 
-    pub fn initialize(&self, configuration_register_values: ConfigurationRegisterValues) {
+    pub fn initialize(&mut self, configuration_register_values: ConfigurationRegisterValues) {
+        let data = configuration_register_values.into_configuration().to_be_bytes();
 
+        self.write_register(Registers::Config, &data);
+
+        let data = configuration_register_values.into_adc_configuration().to_be_bytes();
+
+        self.write_register(Registers::AdcConfig, &data);
+    }
+
+    pub fn configuration(&mut self) -> u16 {
+        let result = self.read_register(Registers::Config);
+
+        u16::from_be_bytes(result)
     }
 
     pub fn manufacturer_id(&mut self) -> u16 {
