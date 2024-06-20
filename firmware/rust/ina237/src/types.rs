@@ -1,5 +1,49 @@
 use std::convert::Into;
 
+pub struct Measurement {
+    voltage_mV: i32,
+    shunt_uV: i32,
+    current_uA: i32,
+    temperature_mC: i32,
+}
+
+impl Measurement {
+    pub fn from_readings(
+        voltage_reading: i16,
+        shunt_reading: i16,
+        amperage_reading: i16,
+        temperature_reading: i16,
+    ) -> Measurement {
+        //TODO: current scaling factor is implementation specific.  This should come in from configuration data
+        //voltage scaling factors are ADC Range specific
+        unsafe {
+            Measurement {
+                voltage_mV: f32::to_int_unchecked(f32::from(voltage_reading) * 3.125),
+                shunt_uV: f32::to_int_unchecked(f32::from(shunt_reading) * 1.25),
+                current_uA: f32::to_int_unchecked(f32::from(amperage_reading) * 305.176),
+                temperature_mC: f32::to_int_unchecked(f32::from(temperature_reading) * 0.125),
+            }
+        }
+    }
+}
+
+impl Measurement {
+    pub fn voltage_mV(&self) -> i32 {
+        self.voltage_mV
+    }
+
+    pub fn shunt_uV(&self) -> i32 {
+        self.shunt_uV
+    }
+
+    pub fn current_uA(&self) -> i32 {
+        self.current_uA
+    }
+    
+    pub fn temp_mC(&self) -> i32 {
+        self.temperature_mC
+    }
+}
 pub struct Configuration {
     address: u8,
     shunt_cal: u16,
@@ -9,13 +53,16 @@ impl Configuration {
     pub fn new(addr: u8, shunt: u16) -> Configuration {
         Configuration {
             address: addr,
-            shunt_cal: shunt
+            shunt_cal: shunt,
         }
     }
 
-
     pub fn addr(&self) -> u8 {
-        return self.address;
+        self.address
+    }
+
+    pub fn shunt(&self) -> u16 {
+        self.shunt_cal
     }
 }
 
@@ -93,37 +140,33 @@ pub struct ConfigurationRegisterValues {
 impl ConfigurationRegisterValues {
     pub fn new() -> ConfigurationRegisterValues {
         ConfigurationRegisterValues {
-            reset : false,
-            conversion_delay : 0,
-            adc_range : AdcRange::HIGH,
+            reset: false,
+            conversion_delay: 0,
+            adc_range: AdcRange::HIGH,
             mode: Mode::ContinuousTempShuntBusVoltage,
-            bus_voltage_conversion_time : ConversionTime::DurationUs1052,
-            shunt_voltage_conversion_time : ConversionTime::DurationUs1052,
-            temperature_conversion_time : ConversionTime::DurationUs1052,
-            adc_averaging : AdcAveraging::Avg1,
+            bus_voltage_conversion_time: ConversionTime::DurationUs1052,
+            shunt_voltage_conversion_time: ConversionTime::DurationUs1052,
+            temperature_conversion_time: ConversionTime::DurationUs1052,
+            adc_averaging: AdcAveraging::Avg1,
         }
     }
 
     pub fn into_configuration(&self) -> u16 {
-        0x0000 | if self.reset {
-            0x8000
-        } else {
-            0x0000
-        } 
-        | (self.conversion_delay as u16 & 0x000F) << 6
-        | (self.adc_range as u16) << 4
+        0x0000
+            | if self.reset { 0x8000 } else { 0x0000 }
+            | (self.conversion_delay as u16 & 0x000F) << 6
+            | (self.adc_range as u16) << 4
     }
 
     pub fn into_adc_configuration(&self) -> u16 {
         0x0000
-        | (self.mode as u16 & 0x0F) << 12
-        | (self.bus_voltage_conversion_time as u16 & 0x07) << 9
-        | (self.shunt_voltage_conversion_time as u16 & 0x07) << 6
-        | (self.temperature_conversion_time as u16 & 0x07) << 3
-        | (self.adc_averaging as u16 & 0x07)
+            | (self.mode as u16 & 0x0F) << 12
+            | (self.bus_voltage_conversion_time as u16 & 0x07) << 9
+            | (self.shunt_voltage_conversion_time as u16 & 0x07) << 6
+            | (self.temperature_conversion_time as u16 & 0x07) << 3
+            | (self.adc_averaging as u16 & 0x07)
     }
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -178,8 +221,6 @@ mod tests {
         assert_eq!(0x0010, 0x0010 & result);
     }
 
-
-
     #[test]
     fn configuration_values_with_low_adc_into_adc_configuration_mode_set() {
         let mut configuration_register_values = ConfigurationRegisterValues::new();
@@ -201,7 +242,6 @@ mod tests {
 
         assert_eq!(ConversionTime::DurationUs150 as u16, (result >> 9) & 0x07);
     }
-
 
     #[test]
     fn configuration_values_with_shunt_conversion_into_adc_configuration() {
@@ -236,4 +276,3 @@ mod tests {
         assert_eq!(AdcAveraging::Avg256 as u16, (result >> 0) & 0x07);
     }
 }
-

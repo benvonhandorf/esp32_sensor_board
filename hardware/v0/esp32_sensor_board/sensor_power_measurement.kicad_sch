@@ -1134,7 +1134,7 @@
 		)
 		(uuid "24fa92d2-0345-48ba-841b-1a410bad3313")
 	)
-	(text "Shunt Resistor:\nADC ranges: +-40.96mV (ADC Range 1) or +-163.84mV (ADC Range 0)\nUsing +-40 to choose low power loss over accuracy.\n\nFull scale: 10A\nR = 0.004 ohms\n\nPower disappation at 60V, 10A:\n40mV * 10A = 0.4W\n\nCurrent_LSB = 305.176mA\nSHUNT_CAL = 4000 (ADC Range 1 requires multiplying by 4)"
+	(text "Shunt Resistor:\nADC ranges: +-40.96mV (ADC Range 1) or +-163.84mV (ADC Range 0)\nUsing +-40 to choose low power loss over accuracy.\n\nFull scale: 10A\nR = 0.004 ohms\n\nPower disappation at 60V, 10A:\n40mV * 10A = 0.4W\n\nCurrent_LSB = 305.176mA\nSHUNT_CAL = 4000 for ADC Range 1 (required multiplying by 4)"
 		(exclude_from_sim no)
 		(at 88.9 40.64 0)
 		(effects

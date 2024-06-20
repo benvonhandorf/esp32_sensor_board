@@ -6,46 +6,36 @@ use std::sync::Mutex;
 
 use anyhow::Result;
 
-
 use embedded_hal::i2c::I2c;
 use embedded_hal::i2c::SevenBitAddress;
 use embedded_hal_bus::i2c::AtomicError;
 use embedded_hal_bus::util::AtomicCell;
+use embedded_svc;
 use esp_idf_svc;
+use esp_idf_svc::hal as esp_idf_hal;
 use esp_idf_svc::hal::delay;
 use esp_idf_svc::hal::i2c::I2C0;
 use esp_idf_svc::hal::modem;
-use esp_idf_svc::hal as esp_idf_hal;
 use esp_idf_svc::sys as esp_idf_sys;
-use embedded_svc;
 
-use embedded_hal::{
-    i2c,
-    digital,
-};
+use embedded_hal::{digital, i2c};
 
-use embedded_svc:: {
-    wifi::Configuration,
-    wifi::ClientConfiguration,
-};
+use embedded_svc::{wifi::ClientConfiguration, wifi::Configuration};
 
 use esp_idf_hal::{
-    delay::{FreeRtos, Delay},
+    delay::{Delay, FreeRtos},
+    gpio::*,
     i2c::{I2cConfig, I2cDriver},
     peripherals::Peripherals,
     prelude::*,
-    spi::*, 
-    gpio::*,
+    spi::*,
     units::*,
 };
 
 use embedded_hal_bus::i2c::AtomicDevice;
 
 use esp_idf_svc::{
-    eventloop::EspSystemEventLoop, 
-    nvs::EspDefaultNvsPartition, 
-    wifi::BlockingWifi, 
-    wifi::EspWifi,
+    eventloop::EspSystemEventLoop, nvs::EspDefaultNvsPartition, wifi::BlockingWifi, wifi::EspWifi,
 };
 
 use esp_idf_sys as _;
@@ -56,14 +46,9 @@ use ina237::types::Mode;
 use log::*;
 // use shared_bus::{BusManagerSimple, I2cProxy};
 
-use sht4x:: {
-    Sht4x,
-    Precision
-};
+use sht4x::{Precision, Sht4x};
 
-use ina237::ina237:: {
-    Ina237,
-};
+use ina237::ina237::Ina237;
 
 // use embedded_sdmmc::*;
 
@@ -88,20 +73,18 @@ fn i2c_scan(i2c_bus_device: &mut AtomicDevice<I2cDriver>) {
     }
 }
 
-fn sht_init<'a>(i2c_bus: AtomicDevice<'a, I2cDriver<'a>> ) -> Sht4x<AtomicDevice<'a, I2cDriver<'a>>, Delay> {
+fn sht_init<'a>(
+    i2c_bus: AtomicDevice<'a, I2cDriver<'a>>,
+) -> Sht4x<AtomicDevice<'a, I2cDriver<'a>>, Delay> {
     // // For SHT40-AD1B, use address 0x44
     let sht40 = Sht4x::new(i2c_bus);
 
     return sht40;
 }
 
-fn sht_read(sht_driver: &mut Sht4x<AtomicDevice<I2cDriver>, Delay>, delay:&mut Delay ) {
-// // For SHT40-AD1B, use address 0x44
-    let device_id = sht_driver.serial_number(delay).unwrap();
-
-    info!("SHT40 Sensor Device Id: {:#02x}", device_id);
-
+fn sht_read(sht_driver: &mut Sht4x<AtomicDevice<I2cDriver>, Delay>, delay: &mut Delay) {
     let measurement = sht_driver.measure(Precision::High, delay).unwrap();
+
     info!(
         "Temp: {:.2}\tHumidity: {:.2}",
         measurement.temperature_celsius(),
@@ -109,9 +92,15 @@ fn sht_read(sht_driver: &mut Sht4x<AtomicDevice<I2cDriver>, Delay>, delay:&mut D
     );
 }
 
-fn sd_test( ) {
+fn ina_read(ina_driver: &mut Ina237<AtomicDevice<I2cDriver>>, delay: &mut Delay) {
+    let m = ina_driver.read().unwrap_or_else(|error| {
+        panic!("Error reading INA")
+    });
 
+    info!("INA A: {} mV {} uV {} uA {} mC", m.voltage_mV(), m.shunt_uV(), m.current_uA(), m.temp_mC());
 }
+
+fn sd_test() {}
 
 fn wifi_scan(wifi: &mut BlockingWifi<EspWifi>) {
     let scan_result = wifi.scan();
@@ -123,11 +112,15 @@ fn wifi_scan(wifi: &mut BlockingWifi<EspWifi>) {
     info!("Scan Result: {:?}", scan_result.unwrap());
 }
 
-fn wifi_init<'a>(wifi_modem: esp_idf_hal::modem::Modem, sys_loop: EspSystemEventLoop) -> BlockingWifi<EspWifi<'a>> {
+fn wifi_init<'a>(
+    wifi_modem: esp_idf_hal::modem::Modem,
+    sys_loop: EspSystemEventLoop,
+) -> BlockingWifi<EspWifi<'a>> {
     let mut wifi = BlockingWifi::wrap(
         EspWifi::new(wifi_modem, sys_loop.clone(), None).unwrap(),
         sys_loop,
-    ).unwrap();
+    )
+    .unwrap();
 
     let _ = wifi.set_configuration(&Configuration::Client(ClientConfiguration::default()));
 
@@ -200,9 +193,14 @@ fn main() -> ! {
 
         let mut sht40 = Sht4x::new(i2c_sht_bus);
 
+        let device_id = sht40.serial_number(&mut delay).unwrap();
+
+        info!("SHT40 Sensor Device Id: {:#02x}", device_id);
+
         let i2c_ina_bus = AtomicDevice::new(&i2c_bus_cell);
 
         let mut ina_config_registers = ina237::types::ConfigurationRegisterValues::new();
+
         ina_config_registers.adc_range = AdcRange::LOW;
         ina_config_registers.mode = Mode::ContinuousTempShuntBusVoltage;
         ina_config_registers.adc_averaging = AdcAveraging::Avg64;
@@ -210,20 +208,27 @@ fn main() -> ! {
         let ina_configuration_a = ina237::types::Configuration::new(0x46, 4000);
 
         let mut ina_a = Ina237::new(i2c_ina_bus, ina_configuration_a);
-        
+
         ina_a.initialize(ina_config_registers);
 
-        info!("INA237 A: Configuration {:#04}", ina_a.configuration());
+        info!("INA237 A: Configuration {:#04x}", ina_a.configuration());
+
+        info!("INA237 A: ADC Configuration {:#04x}", ina_a.adc_configuration());
+
+        info!("INA 237 A: {:#04x}", ina_a.manufacturer_id(),);
+
+        info!("INA 237 A: Shunt Cal: {}", ina_a.shunt_cal());
+
+        FreeRtos::delay_ms(200u32);
 
         loop {
             sht_read(&mut sht40, &mut delay);
 
-            FreeRtos::delay_ms(1000u32);
+            FreeRtos::delay_ms(200u32);
 
-            info!(
-                "INA 237 A: {:#04x}",
-                ina_a.manufacturer_id(),
-            );
+            ina_read(&mut ina_a, &mut delay);
+
+            FreeRtos::delay_ms(200u32);
         }
     }
 
@@ -249,35 +254,32 @@ fn main() -> ! {
 
     // let driver_config = SpiDriverConfig::new();
 
-        // info!("Initializing SD Card");
+    // info!("Initializing SD Card");
 
-        // let spi_driver = SpiDriver::new(spi,
-        // sck,
-        // copi,
-        // Some(cipo),
-        // &driver_config
-        // ).unwrap();
+    // let spi_driver = SpiDriver::new(spi,
+    // sck,
+    // copi,
+    // Some(cipo),
+    // &driver_config
+    // ).unwrap();
 
-        // info!("Preparing SD Card");
+    // info!("Preparing SD Card");
 
-        // let sdcard_config = config::Config::new().baudrate(26.MHz().into());
+    // let sdcard_config = config::Config::new().baudrate(26.MHz().into());
 
-        // let sd_device = SpiDeviceDriver::new(
-        //     &spi_driver,
-        //     None::<AnyOutputPin>,
-        //     &sdcard_config
-        // ).unwrap();
+    // let sd_device = SpiDeviceDriver::new(
+    //     &spi_driver,
+    //     None::<AnyOutputPin>,
+    //     &sdcard_config
+    // ).unwrap();
 
-        // let sdcard = embedded_sdmmc::SdCard::new(sd_device, PinDriver::output(sd_cs).unwrap(), FreeRtos);
+    // let sdcard = embedded_sdmmc::SdCard::new(sd_device, PinDriver::output(sd_cs).unwrap(), FreeRtos);
 
-        // info!("SD Card Type: {}", sdcard.get_card_type().unwrap() as u8);
+    // info!("SD Card Type: {}", sdcard.get_card_type().unwrap() as u8);
 
-        // info!("SD Card Size: {}", sdcard.num_bytes().unwrap());
-
+    // info!("SD Card Size: {}", sdcard.num_bytes().unwrap());
 
     let mut message_6: [u8; 6] = [0; 6];
 
-    loop {
-
-    }
+    loop {}
 }

@@ -6,11 +6,16 @@ use embedded_hal::i2c;
 
 use crate::types::Configuration;
 use crate::types::ConfigurationRegisterValues;
+use crate::types::Measurement;
 use core::fmt;
 
 pub struct Ina237<I2C> {
     i2c: I2C,
     configuration: Configuration,
+}
+
+pub struct Error {
+
 }
 
 enum Registers {
@@ -63,15 +68,15 @@ where
         self.i2c.write_read(self.configuration.addr(), &write_buffer, &mut read_buffer).unwrap_or_else(|error|  {
             panic!("i2c write_read failed: {}", error.kind());
         });
-
-        // self.i2c.read(self.configuration.addr(), &mut read_buffer).unwrap_or_else(|error|  {
-        //     panic!("i2c read failed: {}", error.kind());
-        // });
         
         read_buffer
     }
 
     pub fn initialize(&mut self, configuration_register_values: ConfigurationRegisterValues) {
+        let data = self.configuration.shunt().to_be_bytes();
+
+        self.write_register(Registers::ShuntCal, &data);
+
         let data = configuration_register_values.into_configuration().to_be_bytes();
 
         self.write_register(Registers::Config, &data);
@@ -87,10 +92,37 @@ where
         u16::from_be_bytes(result)
     }
 
+    pub fn adc_configuration(&mut self) -> u16 {
+        let result = self.read_register(Registers::AdcConfig);
+
+        u16::from_be_bytes(result)
+    }
+
     pub fn manufacturer_id(&mut self) -> u16 {
         let result = self.read_register(Registers::ManufacturerId);
 
         u16::from_be_bytes(result)
+    }
+
+    pub fn shunt_cal(&mut self) -> u16 {
+        let result = self.read_register(Registers::ShuntCal);
+
+        u16::from_be_bytes(result)
+    }
+    
+    pub fn read(&mut self) -> Result<Measurement, Error> {
+        let vbus_reading = self.read_register(Registers::VBus);
+
+        let shunt_reading = self.read_register(Registers::VShunt);
+
+        let current_reading = self.read_register(Registers::Current);
+
+        let dietemp_reading = self.read_register(Registers::DieTemp);
+
+        Result::Ok(Measurement::from_readings(i16::from_be_bytes(vbus_reading),
+        i16::from_be_bytes(shunt_reading),
+         i16::from_be_bytes(current_reading), 
+         i16::from_be_bytes(dietemp_reading)))
     }
 }
 
