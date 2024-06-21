@@ -78,3 +78,33 @@ impl Into<u8> for PU_CTRL {
             | if self.RR { 0x01 } else { 0x00 }
     }
 }
+
+pub struct CTRL2 {
+    pub Channel2Selected: bool,
+    pub ConversionRate: u8,
+    pub CalError: bool,
+    pub Calibrate: bool,
+    pub CalMod: u8,
+}
+
+impl From<u8> for CTRL2 {
+    fn from(value: u8) -> Self {
+        Self {
+            Channel2Selected: value & 0x80 != 0,
+            ConversionRate: value >> 4 & 0x07,
+            CalError: value & 0x08 != 0,
+            Calibrate: value & 0x04 != 0,
+            CalMod: value & 0x03,
+        }
+    }
+}
+
+impl Into<u8> for CTRL2 {
+    fn into(self) -> u8 {
+        0x00 | if self.Channel2Selected { 0x80 } else { 0x00 }
+            | self.ConversionRate & 0x07 << 4
+            | if self.CalError { 0x08 } else { 0x00 }
+            | if self.Calibrate { 0x04 } else { 0x00 }
+            | self.CalMod & 0x03 
+    }
+}

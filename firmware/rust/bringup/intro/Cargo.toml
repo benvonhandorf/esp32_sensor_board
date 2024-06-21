@@ -60,6 +60,8 @@ embedded-hal-bus = { version = "0.2.0", features = ["std"] }
 # embedded-sdmmc = { version = "0.7.0" }
 
 ina237 = { path = "../../ina237"}
+nau7802 = { path = "../../nau7802"}
+
 
 [build-dependencies]
 embuild = "0.31.4"

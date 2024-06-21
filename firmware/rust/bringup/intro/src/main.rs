@@ -12,6 +12,7 @@ use embedded_hal_bus::i2c::AtomicError;
 use embedded_hal_bus::util::AtomicCell;
 use embedded_svc;
 use esp_idf_svc;
+use esp_idf_svc::hal::peripherals;
 use esp_idf_svc::hal as esp_idf_hal;
 use esp_idf_svc::hal::delay;
 use esp_idf_svc::hal::i2c::I2C0;
@@ -49,6 +50,8 @@ use log::*;
 use sht4x::{Precision, Sht4x};
 
 use ina237::ina237::Ina237;
+
+use nau7802::nau7802::Nau7802;
 
 // use embedded_sdmmc::*;
 
@@ -98,6 +101,19 @@ fn ina_read(ina_driver: &mut Ina237<AtomicDevice<I2cDriver>>, delay: &mut Delay)
     });
 
     info!("INA A: {} mV {} uV {} uA {} mC", m.voltage_mV(), m.shunt_uV(), m.current_uA(), m.temp_mC());
+}
+
+fn nau_read(nau_driver: &mut Nau7802<AtomicDevice<I2cDriver>,Delay>, delay: &mut Delay) {
+    let is_ready = nau_driver.is_data_ready().unwrap();
+    let ctrl2 = nau_driver.ctrl2().unwrap();
+
+    info!("NAU: data  ready: {} {:04x}", is_ready, Into::<u8>::into(ctrl2));
+
+    if is_ready {
+        let result = nau_driver.read_adc().unwrap();
+
+        info!("NAU: Reading: {}", result);
+    }
 }
 
 fn sd_test() {}
@@ -182,13 +198,29 @@ fn main() -> ! {
 
     info!("I2c Bus Configured");
 
-    {
-        let mut i2c_scan_bus = AtomicDevice::new(&i2c_bus_cell);
+    // {
+    //     let mut i2c_scan_bus = AtomicDevice::new(&i2c_bus_cell);
 
-        i2c_scan(&mut i2c_scan_bus);
-    }
+    //     i2c_scan(&mut i2c_scan_bus);
+    // }
 
     {
+        let i2c_nau_bus = AtomicDevice::new( &i2c_bus_cell);
+        let mut nau_driver = Nau7802::new(i2c_nau_bus);
+
+        nau_driver.initialize(&mut delay).unwrap();
+        
+        info!("NAU Revision: {:#04x}", nau_driver.revision_id().unwrap());
+
+        info!("NAU CTRL2: {:#04x}", Into::<u8>::into(nau_driver.ctrl2().unwrap()));
+
+        if nau_driver.select_channel(nau7802::nau7802::AdcChannel::B).unwrap() {
+            info!("NAU Channel Changed");
+            delay.delay_ms(20);
+        }
+
+        info!("NAU CTRL2: {:#04x}", Into::<u8>::into(nau_driver.ctrl2().unwrap()));
+
         let i2c_sht_bus = AtomicDevice::new(&i2c_bus_cell);
 
         let mut sht40 = Sht4x::new(i2c_sht_bus);
@@ -229,6 +261,8 @@ fn main() -> ! {
             ina_read(&mut ina_a, &mut delay);
 
             FreeRtos::delay_ms(200u32);
+
+            nau_read(&mut nau_driver, &mut delay);
         }
     }
 

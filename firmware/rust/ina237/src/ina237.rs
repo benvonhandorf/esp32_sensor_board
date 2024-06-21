@@ -40,7 +40,7 @@ enum Registers {
 impl<I2C, E> Ina237<I2C>
 where
     I2C: i2c::I2c<Error = E>,
-    E: i2c::Error
+    E: i2c::Error,
 {
     pub fn new(i2c: I2C, configuration: Configuration) -> Ina237<I2C> {
         Ina237 {
