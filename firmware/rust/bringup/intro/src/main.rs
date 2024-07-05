@@ -85,35 +85,44 @@ fn sht_init<'a>(
     return sht40;
 }
 
-fn sht_read(sht_driver: &mut Sht4x<AtomicDevice<I2cDriver>, Delay>, delay: &mut Delay) {
+fn sht_read(sht_driver: &mut Sht4x<AtomicDevice<I2cDriver>, Delay>, delay: &mut Delay) -> (f32, f32) {
     let measurement = sht_driver.measure(Precision::High, delay).unwrap();
 
-    info!(
-        "Temp: {:.2}\tHumidity: {:.2}",
-        measurement.temperature_celsius(),
-        measurement.humidity_percent(),
-    );
+    return (measurement.temperature_celsius().to_num::<f32>(), measurement.humidity_percent().to_num::<f32>());
+
+    // info!(
+    //     "Temp: {:.2}\tHumidity: {:.2}",
+    //     measurement.temperature_celsius(),
+    //     measurement.humidity_percent(),
+    // );
 }
 
-fn ina_read(ina_driver: &mut Ina237<AtomicDevice<I2cDriver>>, delay: &mut Delay) {
+fn ina_read(ina_driver: &mut Ina237<AtomicDevice<I2cDriver>>, delay: &mut Delay) -> (i32, i32, i32, i32) {
     let m = ina_driver.read().unwrap_or_else(|error| {
         panic!("Error reading INA")
     });
 
-    info!("INA A: {} mV {} uV {} uA {} mC", m.voltage_mV(), m.shunt_uV(), m.current_uA(), m.temp_mC());
+    return (m.voltage_mV(), m.shunt_uV(), m.current_uA(), m.temp_mC());
+
+    // info!("INA A: {} mV {} uV {} uA {} mC", m.voltage_mV(), m.shunt_uV(), m.current_uA(), m.temp_mC());
 }
 
-fn nau_read(nau_driver: &mut Nau7802<AtomicDevice<I2cDriver>,Delay>, delay: &mut Delay) {
+fn nau_read(nau_driver: &mut Nau7802<AtomicDevice<I2cDriver>,Delay>, delay: &mut Delay) -> (i32) {
     let is_ready = nau_driver.is_data_ready().unwrap();
     let ctrl2 = nau_driver.ctrl2().unwrap();
 
-    info!("NAU: data  ready: {} {:04x}", is_ready, Into::<u8>::into(ctrl2));
+    let reading_a = if is_ready {
+        nau_driver.read_adc().unwrap()
+    } else {
 
-    if is_ready {
-        let result = nau_driver.read_adc().unwrap();
+    info!("NAU: data ready: {} {:04x}", is_ready, Into::<u8>::into(ctrl2));
 
-        info!("NAU: Reading: {}", result);
-    }
+        0
+    };
+
+    delay.delay_ms(10);
+
+    return (reading_a)
 }
 
 fn sd_test() {}
@@ -212,14 +221,42 @@ fn main() -> ! {
         
         info!("NAU Revision: {:#04x}", nau_driver.revision_id().unwrap());
 
-        info!("NAU CTRL2: {:#04x}", Into::<u8>::into(nau_driver.ctrl2().unwrap()));
+        info!("NAU CTRL1: {:#04x} CTRL2: {:#04x}", Into::<u8>::into(nau_driver.ctrl1().unwrap()), Into::<u8>::into(nau_driver.ctrl2().unwrap()));
 
-        if nau_driver.select_channel(nau7802::nau7802::AdcChannel::B).unwrap() {
-            info!("NAU Channel Changed");
+        nau_driver.set_ldo_voltage(nau7802::registers::LdoVoltage::v3_0).unwrap();
+        nau_driver.enable_ldo().unwrap();
+
+        // if nau_driver.select_channel(nau7802::nau7802::AdcChannel::B, &mut delay).unwrap() {
+        //     info!("NAU Channel Changed to B");
+        //     delay.delay_ms(20);
+        // }
+
+        // info!("NAU CTRL1: {:#04x} CTRL2: {:#04x}", Into::<u8>::into(nau_driver.ctrl1().unwrap()), Into::<u8>::into(nau_driver.ctrl2().unwrap()));
+
+        // info!("NAU Calibrate begin");
+
+        // nau_driver.calibrate(&mut delay).unwrap();
+
+        // info!("NAU Calibrate end");
+
+        info!("NAU CTRL1: {:#04x} CTRL2: {:#04x}", Into::<u8>::into(nau_driver.ctrl1().unwrap()), Into::<u8>::into(nau_driver.ctrl2().unwrap()));
+
+        if nau_driver.select_channel(nau7802::nau7802::AdcChannel::A, &mut delay).unwrap() {
+            info!("NAU Channel Changed to A");
             delay.delay_ms(20);
         }
 
-        info!("NAU CTRL2: {:#04x}", Into::<u8>::into(nau_driver.ctrl2().unwrap()));
+        nau_driver.set_gain(nau7802::registers::Gains::x16).unwrap();
+
+        info!("NAU CTRL1: {:#04x} CTRL2: {:#04x}", Into::<u8>::into(nau_driver.ctrl1().unwrap()), Into::<u8>::into(nau_driver.ctrl2().unwrap()));
+
+        info!("NAU Calibrate begin");
+
+        nau_driver.calibrate(&mut delay).unwrap();
+
+        info!("NAU Calibrate end");
+
+        info!("NAU CTRL1: {:#04x} CTRL2: {:#04x}", Into::<u8>::into(nau_driver.ctrl1().unwrap()), Into::<u8>::into(nau_driver.ctrl2().unwrap()));
 
         let i2c_sht_bus = AtomicDevice::new(&i2c_bus_cell);
 
@@ -254,15 +291,20 @@ fn main() -> ! {
         FreeRtos::delay_ms(200u32);
 
         loop {
-            sht_read(&mut sht40, &mut delay);
+            let sht_reading = sht_read(&mut sht40, &mut delay);
 
             FreeRtos::delay_ms(200u32);
 
-            ina_read(&mut ina_a, &mut delay);
+            let ina_reading = ina_read(&mut ina_a, &mut delay);
 
             FreeRtos::delay_ms(200u32);
 
-            nau_read(&mut nau_driver, &mut delay);
+            let nau_reading = nau_read(&mut nau_driver, &mut delay);
+
+            info!("Reading: {} mV, {} uA, {} C, {} %RH, {} ({:04x}) A", 
+            ina_reading.0, ina_reading.3,
+            sht_reading.0, sht_reading.1,
+            nau_reading, nau_reading);
         }
     }
 

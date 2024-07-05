@@ -1,3 +1,8 @@
+use num_enum::FromPrimitive;
+
+#[allow(non_snake_case)]
+#[allow(non_camel_case_types)]
+#[derive(Copy, Clone)]
 pub enum Registers {
     PU_CTRL = 0x00,
     CTRL1 = 0x01,
@@ -25,6 +30,10 @@ pub enum Registers {
     DEVICE_REVISION = 0x1F,
 }
 
+
+#[allow(non_snake_case)]
+#[allow(non_camel_case_types)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct PU_CTRL {
     pub AVDDS: bool,
     pub OSCS: bool,
@@ -79,32 +88,121 @@ impl Into<u8> for PU_CTRL {
     }
 }
 
+#[repr(u8)]
+// #[FromPrimitive(u8)]
+#[derive(Copy, Clone, Debug, PartialEq, FromPrimitive)]
+#[allow(non_camel_case_types)]
+pub enum LdoVoltage {
+    v2_4 = 0b111,
+    v2_7 = 0b110,
+    v3_0 = 0b101,
+    v3_3 = 0b100,
+    v3_6 = 0b011,
+    v3_9 = 0b010,
+    v4_2 = 0b001,
+    #[default] v4_5 = 0b000,
+}
+
+#[repr(u8)]
+#[derive(Copy, Clone, Debug, PartialEq, FromPrimitive)]
+#[allow(non_camel_case_types)]
+pub enum Gains {
+    x128 = 0b111,
+    x64 = 0b110,
+    x32 = 0b101,
+    x16 = 0b100,
+    x8 = 0b011,
+    x4 = 0b010,
+    x2 = 0b001,
+    #[default] x1 = 0b000,
+}
+
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct CTRL1 {
+    pub conversion_ready_polarity_high: bool,
+    pub drdy_clock_output: bool,
+    pub ldo_voltage: LdoVoltage,
+    pub gain_select: Gains,
+}
+
+impl From<u8> for CTRL1 {
+    fn from(value: u8) -> Self {
+        Self {
+            conversion_ready_polarity_high: !(value & 0x80) == 0x80,
+            drdy_clock_output: value & 0x40 != 0,
+            ldo_voltage: LdoVoltage::from((value >> 3)  & 0x07),
+            gain_select: Gains::from(value & 0x07),
+        }
+    }
+}
+
+impl Into<u8> for CTRL1 {
+    fn into(self) -> u8 {
+        0x00 | if self.conversion_ready_polarity_high { 0x00 } else { 0x80 }
+            | if self.drdy_clock_output { 0x40 } else { 0x00 }
+            | ((self.ldo_voltage as u8) & 0x07) << 3
+            | ((self.gain_select as u8) & 0x07) << 0
+    }
+}
+
+#[repr(u8)]
+#[derive(Copy, Clone, Debug, PartialEq, FromPrimitive)]
+#[allow(non_camel_case_types)]
+pub enum ConversionRate {
+    SPS_320 = 0b111,
+    SPS_80 = 0b011,
+    SPS_40 = 0b010,
+    SPS_20 = 0b001,
+    #[default] SPS_10 = 0b000,
+}
+
+
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct CTRL2 {
-    pub Channel2Selected: bool,
-    pub ConversionRate: u8,
-    pub CalError: bool,
-    pub Calibrate: bool,
-    pub CalMod: u8,
+    pub channel2_selected: bool,
+    pub conversion_rate: ConversionRate,
+    pub cal_error: bool,
+    pub calibrate: bool,
+    pub cal_mod: u8,
 }
 
 impl From<u8> for CTRL2 {
     fn from(value: u8) -> Self {
         Self {
-            Channel2Selected: value & 0x80 != 0,
-            ConversionRate: value >> 4 & 0x07,
-            CalError: value & 0x08 != 0,
-            Calibrate: value & 0x04 != 0,
-            CalMod: value & 0x03,
+            channel2_selected: value & 0x80 != 0,
+            conversion_rate: ConversionRate::from(value >> 4 & 0x07),
+            cal_error: value & 0x08 != 0,
+            calibrate: value & 0x04 != 0,
+            cal_mod: value & 0x03,
         }
     }
 }
 
 impl Into<u8> for CTRL2 {
     fn into(self) -> u8 {
-        0x00 | if self.Channel2Selected { 0x80 } else { 0x00 }
-            | self.ConversionRate & 0x07 << 4
-            | if self.CalError { 0x08 } else { 0x00 }
-            | if self.Calibrate { 0x04 } else { 0x00 }
-            | self.CalMod & 0x03 
+        0x00 | if self.channel2_selected { 0x80 } else { 0x00 }
+            | ((self.conversion_rate as u8) & 0x07) << 4
+            | if self.cal_error { 0x08 } else { 0x00 }
+            | if self.calibrate { 0x04 } else { 0x00 }
+            | self.cal_mod & 0x03 
+    }
+}
+
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn convert_gain_through_u8_returns_same_value_x32() {
+        const INPUT: Gains = Gains::x32;
+
+        let intermediate = INPUT as u8;
+
+        let result = Gains::from(intermediate);
+
+        assert_eq!(INPUT, result);
     }
 }

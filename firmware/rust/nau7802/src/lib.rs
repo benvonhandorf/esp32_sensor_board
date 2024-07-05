@@ -1,5 +1,5 @@
 
-mod registers;
+pub mod registers;
 pub mod nau7802;
 
 #[cfg(test)]

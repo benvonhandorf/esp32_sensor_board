@@ -1,5 +1,3 @@
-use std::convert::Into;
-
 pub struct Measurement {
     voltage_mV: i32,
     shunt_uV: i32,
