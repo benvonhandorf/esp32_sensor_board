@@ -1,5 +1,3 @@
-// use emb_hal::blocking::i2c;
-
 extern crate embedded_hal;
 
 use embedded_hal::i2c;
@@ -7,7 +5,6 @@ use embedded_hal::i2c;
 use crate::types::Configuration;
 use crate::types::ConfigurationRegisterValues;
 use crate::types::Measurement;
-use core::fmt;
 
 pub struct Ina237<I2C> {
     i2c: I2C,
@@ -18,6 +15,7 @@ pub struct Error {
 
 }
 
+#[allow(dead_code)]
 enum Registers {
     Config = 0x00,
     AdcConfig = 0x01,

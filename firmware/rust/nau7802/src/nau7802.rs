@@ -1,6 +1,6 @@
 use embedded_hal::{
     delay::DelayNs,
-    digital::InputPin,
+    // digital::InputPin, //TODO: v2 will use InputPin for conversion ready notification
     i2c::{self, I2c},
 };
 
@@ -35,6 +35,7 @@ where
     InitializeUnknownRevision(u8),
     InitializeNoPowerup(u8),
     NoDataReadyPin,
+    DataNotReady,
     /// Failed I2C communication.
     I2C(E),
 }
@@ -349,6 +350,10 @@ where
     ///Reads the current ADC result.  i24 value returned in an i32.
     pub fn read_adc(&mut self) -> Result<i32, Error<E>> {
         let pu_ctrl = self.pu_ctrl().unwrap();
+
+        if !pu_ctrl.CR {
+            return Result::Err(Error::DataNotReady)
+        }
 
         let write_buffer: [u8; 1] = [Registers::ADCO_B2 as u8];
         let mut read_buffer: [u8; 3] = [0; 3];

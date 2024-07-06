@@ -14,6 +14,12 @@
 		},
 		{
 			"path": "rust/nau7802"
+		},
+		{
+			"path": "rust/bringup/embassy-playground"
+		},
+		{
+			"path": "rust/bringup/embassy-idf-playground"
 		}
 	],
 	"settings": {

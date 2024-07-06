@@ -1,0 +1,39 @@
+[package]
+name = "embassy-playground"
+version = "0.1.0"
+authors = ["Ben Von Handorf <developer@benvonhandorf.com>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+esp-backtrace = { version = "0.12.0", features = [
+    "esp32s3",
+    "exception-handler",
+    "panic-handler",
+    "println",
+] }
+esp-hal = { version = "0.18.0", features = [ "esp32s3" ] }
+esp-println = { version = "0.9.1", features = ["esp32s3", "log"] }
+log = { version = "0.4.21" }
+
+# Embassy
+embassy-futures = { version = "0.1" }
+embassy-sync = { version = "0.6.0", features = ["std"] }
+embassy-time = { version = "0.3.1" }
+
+# ina237 = { path = "../../ina237"}
+# nau7802 = { path = "../../nau7802"}
+
+[profile.dev]
+# Rust debug is too slow.
+# For debug builds always builds with some optimization
+opt-level = "s"
+
+[profile.release]
+codegen-units = 1 # LLVM can perform better optimizations using a single thread
+debug = 2
+debug-assertions = false
+incremental = false
+lto = 'fat'
+opt-level = 's'
+overflow-checks = false

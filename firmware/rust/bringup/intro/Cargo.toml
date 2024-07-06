@@ -39,29 +39,16 @@ embassy = ["esp-idf-svc/embassy-sync", "esp-idf-svc/critical-section", "esp-idf-
 
 [dependencies]
 log = { version = "0.4", default-features = false }
-esp-idf-svc = { version = "0.49.0", default-features = false }
+esp-idf-svc = { version = "0.49.0", features = ["std", "embassy-time-driver"] }
 embedded-svc = { version="0.28.0" }
-embedded-hal = { version = "1.0.0"}
+embedded-hal = { version = "1.0.0" }
 
-
-# log = { version = "0.4.17", default-features = false }
-# esp-idf-sys = { git = "https://github.com/esp-rs/esp-idf-sys.git", default-features = false}
-# esp-idf-hal = { git = "https://github.com/esp-rs/esp-idf-hal.git", optional = true, default-features = false }
-# esp-idf-svc = { git = "https://github.com/esp-rs/esp-idf-svc.git", optional = true, default-features = false }
-# embedded-svc = { git = "https://github.com/esp-rs/embedded-svc", optional = true, default-features = false }
-# esp-idf-sys = { version = "0.34.1", default-features = false }
-# esp-idf-hal = { version = "0.43.1", optional = true, default-features = false }
-# esp-idf-svc = { version = "0.48.1", optional = true, default-features = false }
-# embedded-svc = { version = "0.27.1", optional = true, default-features = false }
 sht4x = { git="https://github.com/benvonhandorf/sht4x" }
 anyhow = "1.0.72"
-# shared-bus = "0.3.1"
 embedded-hal-bus = { version = "0.2.0", features = ["std"] }
-# embedded-sdmmc = { version = "0.7.0" }
 
 ina237 = { path = "../../ina237"}
 nau7802 = { path = "../../nau7802"}
-
 
 [build-dependencies]
 embuild = "0.32.0"

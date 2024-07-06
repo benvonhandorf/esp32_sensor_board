@@ -1,8 +1,12 @@
 pub struct Measurement {
-    voltage_mV: i32,
-    shunt_uV: i32,
-    current_uA: i32,
-    temperature_mC: i32,
+    ///Bus voltage in millivolts
+    voltage_mv: i32,
+    ///Shunt voltage difference in microvolts
+    shunt_uv: i32,
+    ///Current in microamps
+    current_ua: i32,
+    ///Temperature in millidegrees C
+    temperature_mc: i32,
 }
 
 impl Measurement {
@@ -16,30 +20,30 @@ impl Measurement {
         //voltage scaling factors are ADC Range specific
         unsafe {
             Measurement {
-                voltage_mV: f32::to_int_unchecked(f32::from(voltage_reading) * 3.125),
-                shunt_uV: f32::to_int_unchecked(f32::from(shunt_reading) * 1.25),
-                current_uA: f32::to_int_unchecked(f32::from(amperage_reading) * 305.176),
-                temperature_mC: f32::to_int_unchecked(f32::from(temperature_reading) * 0.125),
+                voltage_mv: f32::to_int_unchecked(f32::from(voltage_reading) * 3.125),
+                shunt_uv: f32::to_int_unchecked(f32::from(shunt_reading) * 1.25),
+                current_ua: f32::to_int_unchecked(f32::from(amperage_reading) * 305.176),
+                temperature_mc: f32::to_int_unchecked(f32::from(temperature_reading) * 0.125),
             }
         }
     }
 }
 
 impl Measurement {
-    pub fn voltage_mV(&self) -> i32 {
-        self.voltage_mV
+    pub fn voltage_mv(&self) -> i32 {
+        self.voltage_mv
     }
 
-    pub fn shunt_uV(&self) -> i32 {
-        self.shunt_uV
+    pub fn shunt_uv(&self) -> i32 {
+        self.shunt_uv
     }
 
-    pub fn current_uA(&self) -> i32 {
-        self.current_uA
+    pub fn current_ua(&self) -> i32 {
+        self.current_ua
     }
     
-    pub fn temp_mC(&self) -> i32 {
-        self.temperature_mC
+    pub fn temp_mc(&self) -> i32 {
+        self.temperature_mc
     }
 }
 pub struct Configuration {
