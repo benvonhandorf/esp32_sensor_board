@@ -1,5 +1,8 @@
 #![feature(never_type)]
 
+mod wifi_manager;
+mod wifi_config;
+
 use std::borrow::BorrowMut;
 use std::ptr::null;
 use std::sync::Mutex;
@@ -20,8 +23,6 @@ use esp_idf_svc::hal::modem;
 use esp_idf_svc::sys as esp_idf_sys;
 
 use embedded_hal::{digital, i2c};
-
-use embedded_svc::{wifi::ClientConfiguration, wifi::Configuration};
 
 use esp_idf_hal::{
     delay::{Delay, FreeRtos},
@@ -127,32 +128,7 @@ fn nau_read(nau_driver: &mut Nau7802<AtomicDevice<I2cDriver>,Delay>, delay: &mut
 
 fn sd_test() {}
 
-fn wifi_scan(wifi: &mut BlockingWifi<EspWifi>) {
-    let scan_result = wifi.scan();
 
-    if scan_result.is_err() {
-        error!("Scan Failed: {:x?}", scan_result);
-    }
-
-    info!("Scan Result: {:?}", scan_result.unwrap());
-}
-
-fn wifi_init<'a>(
-    wifi_modem: esp_idf_hal::modem::Modem,
-    sys_loop: EspSystemEventLoop,
-) -> BlockingWifi<EspWifi<'a>> {
-    let mut wifi = BlockingWifi::wrap(
-        EspWifi::new(wifi_modem, sys_loop.clone(), None).unwrap(),
-        sys_loop,
-    )
-    .unwrap();
-
-    let _ = wifi.set_configuration(&Configuration::Client(ClientConfiguration::default()));
-
-    wifi.start().unwrap();
-
-    return wifi;
-}
 
 fn main() -> ! {
     // It is necessary to call this function once. Otherwise some patches to the runtime
