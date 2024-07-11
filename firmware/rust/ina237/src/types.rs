@@ -1,5 +1,51 @@
-use std::convert::Into;
+pub struct Measurement {
+    ///Bus voltage in millivolts
+    voltage_mv: i32,
+    ///Shunt voltage difference in microvolts
+    shunt_uv: i32,
+    ///Current in microamps
+    current_ua: i32,
+    ///Temperature in millidegrees C
+    temperature_mc: i32,
+}
 
+impl Measurement {
+    pub fn from_readings(
+        voltage_reading: i16,
+        shunt_reading: i16,
+        amperage_reading: i16,
+        temperature_reading: i16,
+    ) -> Measurement {
+        //TODO: current scaling factor is implementation specific.  This should come in from configuration data
+        //voltage scaling factors are ADC Range specific
+        unsafe {
+            Measurement {
+                voltage_mv: f32::to_int_unchecked(f32::from(voltage_reading) * 3.125),
+                shunt_uv: f32::to_int_unchecked(f32::from(shunt_reading) * 1.25),
+                current_ua: f32::to_int_unchecked(f32::from(amperage_reading) * 305.176),
+                temperature_mc: f32::to_int_unchecked(f32::from(temperature_reading) * 0.125),
+            }
+        }
+    }
+}
+
+impl Measurement {
+    pub fn voltage_mv(&self) -> i32 {
+        self.voltage_mv
+    }
+
+    pub fn shunt_uv(&self) -> i32 {
+        self.shunt_uv
+    }
+
+    pub fn current_ua(&self) -> i32 {
+        self.current_ua
+    }
+    
+    pub fn temp_mc(&self) -> i32 {
+        self.temperature_mc
+    }
+}
 pub struct Configuration {
     address: u8,
     shunt_cal: u16,
@@ -9,11 +55,20 @@ impl Configuration {
     pub fn new(addr: u8, shunt: u16) -> Configuration {
         Configuration {
             address: addr,
-            shunt_cal: shunt
+            shunt_cal: shunt,
         }
+    }
+
+    pub fn addr(&self) -> u8 {
+        self.address
+    }
+
+    pub fn shunt(&self) -> u16 {
+        self.shunt_cal
     }
 }
 
+#[derive(Clone, Copy)]
 pub enum AdcRange {
     /// 0 = 163.84 mV
     HIGH = 0,
@@ -21,6 +76,7 @@ pub enum AdcRange {
     LOW = 1,
 }
 
+#[derive(Clone, Copy)]
 pub enum Mode {
     SHUTDOWN = 0x00,
     TriggeredBusVoltageSs = 0x01,
@@ -40,6 +96,7 @@ pub enum Mode {
     ContinuousTempShuntBusVoltage = 0x0F,
 }
 
+#[derive(Clone, Copy)]
 pub enum ConversionTime {
     DurationUs50 = 0x00,
     DurationUs84 = 0x01,
@@ -51,6 +108,7 @@ pub enum ConversionTime {
     DurationUs4120 = 0x07,
 }
 
+#[derive(Clone, Copy)]
 pub enum AdcAveraging {
     Avg1 = 0x00,
     Avg4 = 0x01,
@@ -64,45 +122,51 @@ pub enum AdcAveraging {
 
 pub struct ConfigurationRegisterValues {
     /// Force sensor reset
-    reset: bool,
+    pub reset: bool,
     /// Conversion delay, 2ms steps.  Range 0ms - 510ms
-    conversion_delay: u8,
+    pub conversion_delay: u8,
     /// ADC Range.  Default: High
-    adc_range: AdcRange,
+    pub adc_range: AdcRange,
     /// Mode.  Default: CONTINUOUS_TEMP_SHUNT_BUS_VOLTAGE
-    mode: Mode,
+    pub mode: Mode,
     /// ADC Conversion Time for Bus Voltage.  Default: 1052us
-    bus_voltage_conversion_time: ConversionTime,
+    pub bus_voltage_conversion_time: ConversionTime,
     /// ADC Conversion Time for Shunt Voltage.  Default: 1052us
-    shunt_voltage_conversion_time: ConversionTime,
+    pub shunt_voltage_conversion_time: ConversionTime,
     /// ADC Conversion Time for Temperature.  Default: 1052us
-    temperature_conversion_time: ConversionTime,
+    pub temperature_conversion_time: ConversionTime,
     /// ADC Averaging
-    adc_averaging: AdcAveraging,
+    pub adc_averaging: AdcAveraging,
 }
 
 impl ConfigurationRegisterValues {
-    fn new() -> ConfigurationRegisterValues {
+    pub fn new() -> ConfigurationRegisterValues {
         ConfigurationRegisterValues {
-            reset : false,
-            conversion_delay : 0,
-            adc_range : AdcRange::HIGH,
+            reset: false,
+            conversion_delay: 0,
+            adc_range: AdcRange::HIGH,
             mode: Mode::ContinuousTempShuntBusVoltage,
-            bus_voltage_conversion_time : ConversionTime::DurationUs1052,
-            shunt_voltage_conversion_time : ConversionTime::DurationUs1052,
-            temperature_conversion_time : ConversionTime::DurationUs1052,
-            adc_averaging : AdcAveraging::Avg1,
+            bus_voltage_conversion_time: ConversionTime::DurationUs1052,
+            shunt_voltage_conversion_time: ConversionTime::DurationUs1052,
+            temperature_conversion_time: ConversionTime::DurationUs1052,
+            adc_averaging: AdcAveraging::Avg1,
         }
     }
-}
 
-impl Into<u16> for ConfigurationRegisterValues {
-    fn into(self) -> u16 {
-        0x0000 | if self.reset {
-            0x8000
-        } else {
-            0x0000
-        }
+    pub fn into_configuration(&self) -> u16 {
+        0x0000
+            | if self.reset { 0x8000 } else { 0x0000 }
+            | (self.conversion_delay as u16 & 0x000F) << 6
+            | (self.adc_range as u16) << 4
+    }
+
+    pub fn into_adc_configuration(&self) -> u16 {
+        0x0000
+            | (self.mode as u16 & 0x0F) << 12
+            | (self.bus_voltage_conversion_time as u16 & 0x07) << 9
+            | (self.shunt_voltage_conversion_time as u16 & 0x07) << 6
+            | (self.temperature_conversion_time as u16 & 0x07) << 3
+            | (self.adc_averaging as u16 & 0x07)
     }
 }
 
@@ -115,22 +179,102 @@ mod tests {
         let result = Configuration::new(0x01, 2000);
 
         assert_eq!(2000, result.shunt_cal);
+        assert_eq!(0x01, result.addr());
     }
 
     #[test]
     fn configuration_values_into_u16_reset_false() {
         let configuration_register_values = ConfigurationRegisterValues::new();
-        let result: u16 = configuration_register_values.into();
+        let result: u16 = configuration_register_values.into_configuration();
 
         assert_eq!(0x0000, 0x8000 & result);
     }
 
     #[test]
     fn configuration_values_with_reset_into_u16_reset_true() {
-        let configuration_register_values = ConfigurationRegisterValues::new();
-        let result: u16 = configuration_register_values.into();
+        let mut configuration_register_values = ConfigurationRegisterValues::new();
+
+        configuration_register_values.reset = true;
+
+        let result: u16 = configuration_register_values.into_configuration();
 
         assert_eq!(0x8000, 0x8000 & result);
     }
-}
 
+    #[test]
+    fn configuration_values_with_high_adc_into_u16_adc_range_clear() {
+        let mut configuration_register_values = ConfigurationRegisterValues::new();
+
+        configuration_register_values.adc_range = AdcRange::HIGH;
+
+        let result: u16 = configuration_register_values.into_configuration();
+
+        assert_eq!(0x0000, 0x0010 & result);
+    }
+
+    #[test]
+    fn configuration_values_with_low_adc_into_u16_adc_range_set() {
+        let mut configuration_register_values = ConfigurationRegisterValues::new();
+
+        configuration_register_values.adc_range = AdcRange::LOW;
+
+        let result: u16 = configuration_register_values.into_configuration();
+
+        assert_eq!(0x0010, 0x0010 & result);
+    }
+
+    #[test]
+    fn configuration_values_with_low_adc_into_adc_configuration_mode_set() {
+        let mut configuration_register_values = ConfigurationRegisterValues::new();
+
+        configuration_register_values.mode = Mode::ContinuousBusVoltage;
+
+        let result: u16 = configuration_register_values.into_adc_configuration();
+
+        assert_eq!(Mode::ContinuousBusVoltage as u16, (result >> 12) & 0x0F);
+    }
+
+    #[test]
+    fn configuration_values_with_bus_conversion_into_adc_configuration() {
+        let mut configuration_register_values = ConfigurationRegisterValues::new();
+
+        configuration_register_values.bus_voltage_conversion_time = ConversionTime::DurationUs150;
+
+        let result: u16 = configuration_register_values.into_adc_configuration();
+
+        assert_eq!(ConversionTime::DurationUs150 as u16, (result >> 9) & 0x07);
+    }
+
+    #[test]
+    fn configuration_values_with_shunt_conversion_into_adc_configuration() {
+        let mut configuration_register_values = ConfigurationRegisterValues::new();
+
+        configuration_register_values.shunt_voltage_conversion_time = ConversionTime::DurationUs150;
+
+        let result: u16 = configuration_register_values.into_adc_configuration();
+
+        assert_eq!(ConversionTime::DurationUs150 as u16, (result >> 6) & 0x07);
+    }
+
+    #[test]
+    fn configuration_values_with_temp_conversion_into_adc_configuration() {
+        let mut configuration_register_values = ConfigurationRegisterValues::new();
+
+        configuration_register_values.temperature_conversion_time = ConversionTime::DurationUs150;
+
+        let result: u16 = configuration_register_values.into_adc_configuration();
+
+        assert_eq!(ConversionTime::DurationUs150 as u16, (result >> 3) & 0x07);
+    }
+
+    #[test]
+    fn configuration_values_with_averaging_into_adc_configuration() {
+        let mut configuration_register_values = ConfigurationRegisterValues::new();
+
+        configuration_register_values.adc_averaging = AdcAveraging::Avg256;
+
+        let result: u16 = configuration_register_values.into_adc_configuration();
+
+        assert_eq!(AdcAveraging::Avg256 as u16, (result >> 0) & 0x07);
+    }
+}

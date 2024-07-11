@@ -16,7 +16,3 @@ enum Registers {
     PWR_LIMIT = 0x11,
     MANUFACTURER_ID = 0x3E,
 }
-
-struct ConfigValues {
-    
-}

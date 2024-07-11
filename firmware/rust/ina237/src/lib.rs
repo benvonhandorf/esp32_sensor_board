@@ -1,4 +1,4 @@
-// #![no_std]
+#![no_std]
 extern crate std;
 
 pub mod ina237;
