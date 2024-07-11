@@ -641,6 +641,171 @@
 				)
 			)
 		)
+		(symbol "Device:D_Small"
+			(pin_numbers hide)
+			(pin_names
+				(offset 0.254) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "D"
+				(at -1.27 2.032 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "D_Small"
+				(at -3.81 -2.032 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Diode, small symbol"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Device" "D"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Pins" "1=K 2=A"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "diode"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "D_Small_0_1"
+				(polyline
+					(pts
+						(xy -0.762 -1.016) (xy -0.762 1.016)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.762 0) (xy 0.762 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.016) (xy -0.762 0) (xy 0.762 1.016) (xy 0.762 -1.016)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "D_Small_1_1"
+				(pin passive line
+					(at -2.54 0 0)
+					(length 1.778)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 0 180)
+					(length 1.778)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Device:L_Small"
 			(pin_numbers hide)
 			(pin_names
@@ -922,22 +1087,23 @@
 				)
 			)
 		)
-		(symbol "Jumper:Jumper_2_Open"
+		(symbol "Jumper:Jumper_2_Bridged"
+			(pin_numbers hide)
 			(pin_names
 				(offset 0) hide)
-			(exclude_from_sim no)
+			(exclude_from_sim yes)
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "JP"
-				(at 0 2.794 0)
+				(at 0 1.905 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "Jumper_2_Open"
-				(at 0 -2.286 0)
+			(property "Value" "Jumper_2_Bridged"
+				(at 0 -2.54 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -962,7 +1128,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Jumper, 2-pole, open"
+			(property "Description" "Jumper, 2-pole, closed/bridged"
 				(at 0 0 0)
 				(effects
 					(font
@@ -989,7 +1155,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "Jumper_2_Open_0_0"
+			(symbol "Jumper_2_Bridged_0_0"
 				(circle
 					(center -2.032 0)
 					(radius 0.508)
@@ -1013,11 +1179,11 @@
 					)
 				)
 			)
-			(symbol "Jumper_2_Open_0_1"
+			(symbol "Jumper_2_Bridged_0_1"
 				(arc
-					(start 1.524 1.27)
-					(mid 0 1.778)
-					(end -1.524 1.27)
+					(start 1.524 0.254)
+					(mid 0 0.762)
+					(end -1.524 0.254)
 					(stroke
 						(width 0)
 						(type default)
@@ -1027,7 +1193,7 @@
 					)
 				)
 			)
-			(symbol "Jumper_2_Open_1_1"
+			(symbol "Jumper_2_Bridged_1_1"
 				(pin passive line
 					(at -5.08 0 0)
 					(length 2.54)
@@ -1767,7 +1933,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "35bc84b6-c2db-4558-b290-dde9521c275b")
+		(uuid "2a5b3cba-ff68-4f74-9938-1827c07e1f17")
 	)
 	(wire
 		(pts
@@ -2008,6 +2174,16 @@
 			(type default)
 		)
 		(uuid "91fe6e64-d4da-472c-b382-828202faff44")
+	)
+	(wire
+		(pts
+			(xy 81.28 35.56) (xy 88.9 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9d7ccffe-a6e1-4c6a-96a0-6add4ec4760a")
 	)
 	(wire
 		(pts
@@ -2254,7 +2430,7 @@
 		)
 		(uuid "78854019-e75e-481a-ba3f-1b9aea469f21")
 	)
-	(text "Optional USB power input.  \nUnprotected, do not use with external power."
+	(text "Optional USB power input.  \nLMR36006 requires 4.2V minimum, diode drop must be less than 0.8V"
 		(exclude_from_sim no)
 		(at 45.72 43.18 0)
 		(effects
@@ -2400,7 +2576,7 @@
 	)
 	(hierarchical_label "PWR_IN"
 		(shape input)
-		(at 76.2 35.56 0)
+		(at 88.9 35.56 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3368,32 +3544,32 @@
 		)
 	)
 	(symbol
-		(lib_id "Jumper:Jumper_2_Open")
+		(lib_id "Jumper:Jumper_2_Bridged")
 		(at 63.5 35.56 0)
 		(unit 1)
-		(exclude_from_sim no)
+		(exclude_from_sim yes)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "804754fd-fde2-4752-b0a9-cca35538bf8f")
 		(property "Reference" "JP201"
-			(at 63.5 29.21 0)
+			(at 63.5 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "Jumper_2_Open"
-			(at 63.5 31.75 0)
+		(property "Value" "USB Power Jumper"
+			(at 63.5 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm"
+		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm"
 			(at 63.5 35.56 0)
 			(effects
 				(font
@@ -3411,7 +3587,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "Jumper, 2-pole, closed/bridged"
 			(at 63.5 35.56 0)
 			(effects
 				(font
@@ -3701,6 +3877,92 @@
 			(project "esp32_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/1fe32be5-ab10-4126-a012-3b12c483f6b3"
 					(reference "R201")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Small")
+		(at 78.74 35.56 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a7499950-60de-4a12-ac65-4e71fd3f0720")
+		(property "Reference" "D1"
+			(at 78.74 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "D_Small"
+			(at 78.74 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 78.74 35.56 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 78.74 35.56 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Diode, small symbol"
+			(at 78.74 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 78.74 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 78.74 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "8854fe8b-ae54-4e80-8aca-bb9dd2af62ca")
+		)
+		(pin "1"
+			(uuid "8ae82d69-cc30-45c1-a94b-5c4316b18f36")
+		)
+		(instances
+			(project ""
+				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/1fe32be5-ab10-4126-a012-3b12c483f6b3"
+					(reference "D1")
 					(unit 1)
 				)
 			)

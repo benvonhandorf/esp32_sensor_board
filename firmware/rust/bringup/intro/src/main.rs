@@ -2,6 +2,7 @@
 
 mod wifi_manager;
 mod wifi_config;
+mod mqtt_manager;
 
 use std::borrow::BorrowMut;
 use std::ptr::null;
@@ -130,6 +131,7 @@ fn sd_test() {}
 
 
 
+
 fn main() -> ! {
     // It is necessary to call this function once. Otherwise some patches to the runtime
     // implemented by esp-idf-sys might not link properly. See https://github.com/esp-rs/esp-idf-template/issues/71
@@ -142,6 +144,12 @@ fn main() -> ! {
 
     let sys_loop = EspSystemEventLoop::take().unwrap();
     let nvs = EspDefaultNvsPartition::take().unwrap();
+
+    let _wifi = wifi_manager::wifi_create(&sys_loop, &nvs).unwrap();
+
+    let mqtt_client = mqtt_manager::mqtt_create().unwrap();
+
+    mqtt_manager::mqtt_post(&mqtt_client, "sensor/esp123/status", "alive").unwrap();
 
     // let mut clocks = ClockControl::boot_defaults(system.clock_control).freeze();
 

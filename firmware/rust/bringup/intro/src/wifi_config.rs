@@ -3,9 +3,8 @@ pub struct WifiConfiguration {
     pub psk: str,
 }
 
-pub const WIFI_CONFIGURATION : [WifiConfiguration] = [
+pub const WIFI_CONFIGURATION : WifiConfiguration =
     WifiConfiguration {
         ssid: "Oblivion",
         psk: "t4unjath0mson",
-    }
-];
+    };

@@ -4,41 +4,29 @@ use esp_idf_svc::{self, wifi::{BlockingWifi, EspWifi}};
 
 use embedded_svc::{wifi::ClientConfiguration, wifi::Configuration};
 
-use crate::wifi_config;
+pub fn wifi_create(
+    sys_loop: &EspSystemEventLoop,
+    nvs: &EspDefaultNvsPartition,
+) -> Result<EspWifi<'static>, EspError> {
+    let peripherals = Peripherals::take()?;
 
-static mut WIFI: Mutex<RefCell<Option<BlockingWifi<EspWifi>>>> = Mutex::new(RefCell::new(None));
+    let mut esp_wifi = EspWifi::new(peripherals.modem, sys_loop.clone(), Some(nvs.clone()))?;
+    let mut wifi = BlockingWifi::wrap(&mut esp_wifi, sys_loop.clone())?;
 
-pub fn wifi_scan() {
-    if let Some(wifi) = WIFI.borrow().borrow_mut().as_mut() {
-        wifi.scan();
-    }
-    let scan_result = WIFI.unwrap().scan();
+    wifi.set_configuration(&Configuration::Client(ClientConfiguration {
+        ssid: wifi_config::WIFI_CONFIGURATION.SSID.try_into().unwrap(),
+        password: wifi_config::WIFI_CONFIGURATION.psk.try_into().unwrap(),
+        ..Default::default()
+    }))?;
 
-    if scan_result.is_err() {
-        error!("Scan Failed: {:x?}", scan_result);
-    }
+    wifi.start()?;
+    info!("Wifi started");
 
-    info!("Scan Result: {:?}", scan_result.unwrap());
-}
+    wifi.connect()?;
+    info!("Wifi connected");
 
+    wifi.wait_netif_up()?;
+    info!("Wifi netif up");
 
-fn wifi_start<'a>(
-    wifi_modem: esp_idf_hal::modem::Modem,
-    sys_loop: EspSystemEventLoop,
-) -> Result<(), Error> {
-    //Configure wifi modem
-    WIFI. = BlockingWifi::wrap(
-                EspWifi::new(wifi_modem, sys_loop.clone(), None).unwrap(),
-                sys_loop,
-            )
-        Some(w) => {
-            WIFI
-            WIFI = Some(w);
-        }
-
-    WIFI.unwrap().set_configuration(&Configuration::Client(ClientConfiguration::default())).unwrap();
-
-    WIFI.start().unwrap();
-
-    Result::Ok(())
+    Ok(esp_wifi)
 }
