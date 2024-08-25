@@ -4508,6 +4508,12 @@
 		(uuid "3f7d80bb-aa82-4667-8a3f-0c5bdcd1fda9")
 	)
 	(junction
+		(at 217.17 135.89)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4017f021-a649-4ebc-a694-c768b342d7e4")
+	)
+	(junction
 		(at 74.93 160.02)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4572,12 +4578,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8cbb701f-dd12-481c-ba55-4f8f78d348ec")
-	)
-	(junction
-		(at 240.03 146.05)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "91e3cec9-79b6-44f9-9948-d89f34e66ada")
 	)
 	(junction
 		(at 278.13 105.41)
@@ -4658,6 +4658,12 @@
 		(uuid "db0d49ab-eea3-4821-8e5a-46c114e926c5")
 	)
 	(junction
+		(at 219.71 140.97)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "dd1e37ec-56dd-4234-ab0f-f4ac1ca25dff")
+	)
+	(junction
 		(at 219.71 156.21)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4709,7 +4715,7 @@
 	)
 	(wire
 		(pts
-			(xy 219.71 138.43) (xy 219.71 149.86)
+			(xy 219.71 138.43) (xy 219.71 140.97)
 		)
 		(stroke
 			(width 0)
@@ -5049,16 +5055,6 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 135.89) (xy 226.06 135.89)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2836800d-ebf1-43f1-a678-9e5914173699")
-	)
-	(wire
-		(pts
 			(xy 101.6 124.46) (xy 106.68 124.46)
 		)
 		(stroke
@@ -5229,7 +5225,7 @@
 	)
 	(wire
 		(pts
-			(xy 217.17 135.89) (xy 220.98 135.89)
+			(xy 217.17 135.89) (xy 227.33 135.89)
 		)
 		(stroke
 			(width 0)
@@ -5499,6 +5495,16 @@
 	)
 	(wire
 		(pts
+			(xy 219.71 140.97) (xy 219.71 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "53b159ed-8e7d-4464-8775-aff242ce12a1")
+	)
+	(wire
+		(pts
 			(xy 237.49 143.51) (xy 240.03 143.51)
 		)
 		(stroke
@@ -5627,6 +5633,16 @@
 		)
 		(uuid "66201cf3-446a-4d4d-986d-7337147c3f29")
 	)
+	(wire
+		(pts
+			(xy 227.33 146.05) (xy 240.03 146.05)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6720fd39-2973-4d56-8f6e-4be0ddbde303")
+	)
 	(bus
 		(pts
 			(xy 12.7 160.02) (xy 74.93 160.02)
@@ -5636,16 +5652,6 @@
 			(type default)
 		)
 		(uuid "681f3e21-d5b2-4eb9-bbe9-ddcdb90ae427")
-	)
-	(wire
-		(pts
-			(xy 242.57 146.05) (xy 240.03 146.05)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6847d3da-016a-49fc-b8d6-1cb33582029b")
 	)
 	(bus
 		(pts
@@ -6359,6 +6365,16 @@
 	)
 	(wire
 		(pts
+			(xy 215.9 135.89) (xy 217.17 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bebe7ad6-33f6-44ef-977b-1d742cc92a56")
+	)
+	(wire
+		(pts
 			(xy 267.97 120.65) (xy 270.51 120.65)
 		)
 		(stroke
@@ -6749,6 +6765,16 @@
 	)
 	(wire
 		(pts
+			(xy 215.9 140.97) (xy 219.71 140.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e367da9a-8427-4659-9891-bf980a03895b")
+	)
+	(wire
+		(pts
 			(xy 233.68 114.3) (xy 237.49 114.3)
 		)
 		(stroke
@@ -6776,16 +6802,6 @@
 			(type default)
 		)
 		(uuid "e72b1963-b0b5-4ce6-9602-a3d8c74df22b")
-	)
-	(wire
-		(pts
-			(xy 227.33 146.05) (xy 240.03 146.05)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e775258b-1b4b-4026-b41d-2a5ba5a4b9bb")
 	)
 	(bus
 		(pts
@@ -7765,7 +7781,7 @@
 		(uuid "f161df91-8eac-4c74-95a0-d8dfcb98c532")
 	)
 	(label "SPI_CIPO"
-		(at 181.61 134.62 180)
+		(at 181.61 142.24 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7798,7 +7814,7 @@
 		(uuid "f7dba58f-f6c0-4709-814c-6c6f95057aa7")
 	)
 	(label "SPI_SCK"
-		(at 181.61 142.24 180)
+		(at 181.61 134.62 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7894,32 +7910,33 @@
 	)
 	(symbol
 		(lib_id "Device:C_Small")
-		(at 223.52 135.89 90)
+		(at 215.9 138.43 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "04f03010-4e96-4405-b276-1a6c23e4ad93")
 		(property "Reference" "C315"
-			(at 223.5263 129.54 90)
+			(at 213.36 142.748 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify right)
 			)
 		)
 		(property "Value" "0.1uF"
-			(at 223.5263 132.08 90)
+			(at 213.106 144.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify right)
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 223.52 135.89 0)
+			(at 215.9 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7928,7 +7945,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 223.52 135.89 0)
+			(at 215.9 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7937,7 +7954,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 223.52 135.89 0)
+			(at 215.9 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12640,7 +12657,7 @@
 				)
 			)
 		)
-		(property "Footprint" "USB4510-03-1-A_REVA:GCT_USB4510-03-1-A_REVA"
+		(property "Footprint" "USB4510-03-1-A:GCT_USB4510-03-1-A_REVA"
 			(at 245.11 73.66 0)
 			(effects
 				(font
