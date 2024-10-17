@@ -5,7 +5,11 @@
       "Application": "Pcbnew",
       "Version": "8.0.3-8.0.3-0~ubuntu22.04.1"
     },
+<<<<<<< HEAD
     "CreationDate": "2024-07-18T21:32:24-04:00"
+=======
+    "CreationDate": "2023-11-01T09:21:20-04:00"
+>>>>>>> bf4853377a5fa03d705bda68cdfbf83d447493ec
   },
   "GeneralSpecs": {
     "ProjectId": {

@@ -23,5 +23,7 @@ pub fn mqtt_create() -> Result<(EspMqttClient<'static>, EspMqttConnection), EspE
 
 pub(crate) fn mqtt_post(mqtt_tuple: &(EspMqttClient<'_>, EspMqttConnection), topic: &str, value: &str) -> Result<(), EspError> {
     let (mqtt_client, mqtt_connection) = mqtt_tuple;
+
+    
 }
 
