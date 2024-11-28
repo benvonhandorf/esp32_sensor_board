@@ -6316,7 +6316,7 @@
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "R310"
-			(at -3.5 0 360)
+			(at -3.5 0 0)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "d8ffe2fa-5c99-4db7-83c3-460c18bfee5e")
@@ -6328,7 +6328,7 @@
 			)
 		)
 		(property "Value" "50k"
-			(at 0 1.43 360)
+			(at 0 1.43 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "6c03e288-a382-4c83-a3dd-e7906b7eab23")
@@ -6484,7 +6484,7 @@
 			(uuid "477f2248-8843-4aa4-8c58-94d536a2295e")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "28cc360f-1e52-4d9c-9bfe-b32265b2ab9f")
 			(effects
@@ -10259,7 +10259,7 @@
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "R308"
-			(at -3.5 -0.25 360)
+			(at -3.5 -0.25 0)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "c7ef8859-eaa7-4c21-a34e-a1b10b88d229")
@@ -10271,7 +10271,7 @@
 			)
 		)
 		(property "Value" "50k"
-			(at 0 1.43 360)
+			(at 0 1.43 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "3f9c6aa6-d40f-471c-8657-32403e1f349d")
@@ -10440,7 +10440,7 @@
 			(uuid "b3a722e5-b1fc-4162-915c-5b4007102ba7")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "08c01b8c-0d71-4ec2-aac2-762f547d6156")
 			(effects
@@ -10712,7 +10712,7 @@
 			)
 		)
 		(property "Value" "50k"
-			(at 0 1.43 360)
+			(at 0 1.43 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "ba284235-e039-4cbd-8de0-392706b3c7c5")
@@ -10868,7 +10868,7 @@
 			(uuid "ded7120b-580a-4afa-bf58-1fc11c18d39f")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "055180ef-1312-4941-bbed-20cffebc1b01")
 			(effects
@@ -23089,7 +23089,7 @@
 			)
 		)
 		(property "Value" "50k"
-			(at 0 1.43 360)
+			(at 0 1.43 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "cf23b2cc-6dd5-4c15-9c8e-a15176143a43")
@@ -23245,7 +23245,7 @@
 			(uuid "35d9b8ff-99db-45a7-951c-215e3ed02203")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(uuid "522dd92c-66bb-4049-9912-e552de9ae5bd")
 			(effects
