@@ -1920,7 +1920,7 @@
 			(uuid "976c22a0-4b03-41c1-be79-b3ce201ca97e")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "J502")
 					(unit 1)
@@ -2002,7 +2002,7 @@
 			(uuid "2849ae03-7519-4b9f-bdbb-bf21c5a08045")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "C505")
 					(unit 1)
@@ -2080,7 +2080,7 @@
 			(uuid "95303b20-b800-4ad7-8f84-608fe3bfb665")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "#PWR0503")
 					(unit 1)
@@ -2162,7 +2162,7 @@
 			(uuid "b2660ad4-afdf-491c-98cc-e1efc70bc670")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "C506")
 					(unit 1)
@@ -2240,7 +2240,7 @@
 			(uuid "f1967a01-a25a-4ca1-9ec5-199403f31915")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "#PWR0507")
 					(unit 1)
@@ -2322,7 +2322,7 @@
 			(uuid "4762ddf1-748a-4139-88a4-272432b3858b")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "C504")
 					(unit 1)
@@ -2400,7 +2400,7 @@
 			(uuid "1deae427-b3c3-476a-b27e-15181a21c750")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "#PWR0508")
 					(unit 1)
@@ -2482,7 +2482,7 @@
 			(uuid "1a5f786e-0f42-4198-b416-4aa62bdb7404")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "C501")
 					(unit 1)
@@ -2560,7 +2560,7 @@
 			(uuid "d009471e-ad69-45a6-a714-75c1e204a60c")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "#PWR0506")
 					(unit 1)
@@ -2638,7 +2638,7 @@
 			(uuid "3a636a21-0450-49f0-9348-5c898764190e")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "#PWR0505")
 					(unit 1)
@@ -2761,7 +2761,7 @@
 			(uuid "9fa99227-a98a-424c-bae1-432758a488b8")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "U501")
 					(unit 1)
@@ -2839,7 +2839,7 @@
 			(uuid "11634390-1d7a-4b96-84f0-0845a680ea12")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "#PWR0502")
 					(unit 1)
@@ -2921,7 +2921,7 @@
 			(uuid "2218bbf6-b91e-4b79-a6d4-289f011f71af")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "C503")
 					(unit 1)
@@ -2999,7 +2999,7 @@
 			(uuid "8207c5c5-3d7a-42bf-a924-0dd24ad2e483")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "#PWR0504")
 					(unit 1)
@@ -3081,7 +3081,7 @@
 			(uuid "d82eeef1-95db-4ce7-9b9c-3948af67526d")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "C502")
 					(unit 1)
@@ -3159,7 +3159,7 @@
 			(uuid "4210fdfc-7876-4f9b-9731-d3c1e89f1ffa")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "#PWR0501")
 					(unit 1)
@@ -3248,7 +3248,7 @@
 			(uuid "17228fef-8b35-48ef-abaf-d9dbe2f0ce65")
 		)
 		(instances
-			(project "esp32_sensor_board"
+			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "J501")
 					(unit 1)

@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "USB4510-03-1-A")(type "KiCad")(uri "/home/benvh/projects/esp32_sensor_board/hardware/USB4510-03-1-A_REVA/USB4510-03-1-A_REVA.kicad_sym")(options "")(descr ""))
+)

@@ -508,7 +508,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "esp32_sensor_board.kicad_pro",
+    "filename": "s3_sensor_board.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -751,18 +751,18 @@
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "esp32_sensor_board.kicad_sch",
-        "name": "esp32_sensor_board",
+        "filename": "s3_sensor_board.kicad_sch",
+        "name": "s3_sensor_board",
         "uuid": "d76badc5-1f0d-4fe6-889f-ca56408e093d"
       }
     ],
-    "used_designators": "",
+    "used_designators": "U1",
     "variants": []
   },
   "sheets": [
     [
       "d76badc5-1f0d-4fe6-889f-ca56408e093d",
-      "esp32_sensor_board"
+      "s3_sensor_board"
     ],
     [
       "1fe32be5-ab10-4126-a012-3b12c483f6b3",
