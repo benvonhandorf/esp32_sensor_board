@@ -613,7 +613,14 @@
       "version": 5
     },
     "net_colors": null,
-    "netclass_assignments": null,
+    "netclass_assignments": {
+      "Net-(AE401-A)": [
+        "50ohm"
+      ],
+      "Net-(J405-In)": [
+        "50ohm"
+      ]
+    },
     "netclass_patterns": [
       {
         "netclass": "Minimums",
@@ -756,7 +763,7 @@
         "uuid": "d76badc5-1f0d-4fe6-889f-ca56408e093d"
       }
     ],
-    "used_designators": "U1",
+    "used_designators": "J1,J405,AE401,C1-3,C409-410,#FLG401-403,JP401,R1-7,R408-413,R415,FB401,#PWR410,#PWR412,#PWR416,#PWR422,#PWR425,U1-2",
     "variants": []
   },
   "sheets": [
@@ -777,8 +784,8 @@
       "Load Cell Sensor"
     ],
     [
-      "5e470cd3-e557-4472-af09-b387d4471e5d",
-      "Power Measurement"
+      "a3f62705-4ed2-4774-bc9d-a9077f62dc75",
+      "Battery"
     ],
     [
       "7a6bdea2-c1f8-459a-85c8-63665cb70e23",
