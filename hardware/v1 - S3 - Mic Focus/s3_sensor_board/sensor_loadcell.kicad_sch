@@ -1108,26 +1108,6 @@
 	)
 	(wire
 		(pts
-			(xy 43.18 114.3) (xy 48.26 114.3)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1e2a6f48-1fad-4bde-8ff0-273b00faef5f")
-	)
-	(wire
-		(pts
-			(xy 43.18 116.84) (xy 48.26 116.84)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3d24bf08-07d7-4b4a-a1d4-32bab2b78023")
-	)
-	(wire
-		(pts
 			(xy 25.4 30.48) (xy 25.4 33.02)
 		)
 		(stroke
@@ -1238,16 +1218,6 @@
 	)
 	(wire
 		(pts
-			(xy 43.18 111.76) (xy 48.26 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6d079b8c-e93f-41d5-8751-b11bf93531a9")
-	)
-	(wire
-		(pts
 			(xy 43.18 88.9) (xy 48.26 88.9)
 		)
 		(stroke
@@ -1318,26 +1288,6 @@
 	)
 	(wire
 		(pts
-			(xy 58.42 175.26) (xy 58.42 177.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "825499e5-d0e4-4bb0-9d71-db02c093441e")
-	)
-	(wire
-		(pts
-			(xy 58.42 167.64) (xy 60.96 167.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8a4de7f1-5bf4-4453-a1c1-0339290ab144")
-	)
-	(wire
-		(pts
 			(xy 60.96 55.88) (xy 60.96 63.5)
 		)
 		(stroke
@@ -1375,16 +1325,6 @@
 			(type default)
 		)
 		(uuid "9c77a749-4ffd-4b85-8036-8bda6764c67d")
-	)
-	(wire
-		(pts
-			(xy 58.42 177.8) (xy 60.96 177.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "acbc6f9e-0a35-4622-a123-9f2673cfe651")
 	)
 	(wire
 		(pts
@@ -1448,26 +1388,6 @@
 	)
 	(wire
 		(pts
-			(xy 43.18 106.68) (xy 48.26 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c6ce8871-44e6-45be-a8e1-75ed1b21a414")
-	)
-	(wire
-		(pts
-			(xy 58.42 170.18) (xy 58.42 167.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ce565568-6e8c-4a2b-b0a2-d78e3be0c36f")
-	)
-	(wire
-		(pts
 			(xy 127 88.9) (xy 134.62 88.9)
 		)
 		(stroke
@@ -1475,16 +1395,6 @@
 			(type default)
 		)
 		(uuid "dbcb2f8b-3c1b-4090-8bb2-34fd1e177872")
-	)
-	(wire
-		(pts
-			(xy 43.18 109.22) (xy 48.26 109.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "dfade095-652f-41e5-814b-0cf80ea11445")
 	)
 	(wire
 		(pts
@@ -1576,36 +1486,6 @@
 		)
 		(uuid "0e4f91f5-719a-4106-a3f8-3592317e31e6")
 	)
-	(label "S1_N"
-		(at 60.96 167.64 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1d0e35cf-64d7-4e00-aefe-e4c41217e3e3")
-	)
-	(label "SHIELD"
-		(at 48.26 116.84 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "22f95262-f8c0-46f4-b22b-cb5d1e508e10")
-	)
-	(label "S2_N"
-		(at 48.26 111.76 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "29617351-a0fc-4f88-8358-8ed59a97270b")
-	)
 	(label "S1_P"
 		(at 48.26 93.98 0)
 		(effects
@@ -1666,16 +1546,6 @@
 		)
 		(uuid "66c35c82-e2e5-486b-924b-ddbd3cc37571")
 	)
-	(label "S2_P"
-		(at 48.26 114.3 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "730e1a4f-5c28-4821-9b3f-362ba934d06e")
-	)
 	(label "S1_N"
 		(at 48.26 91.44 0)
 		(effects
@@ -1716,16 +1586,6 @@
 		)
 		(uuid "9c341cc8-d9bf-491c-be2f-c9b7c83f0da7")
 	)
-	(label "S1_P"
-		(at 60.96 177.8 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "ab77c746-2674-4d53-bc73-7a3bba5eae48")
-	)
 	(label "E_p"
 		(at 48.26 86.36 0)
 		(effects
@@ -1745,26 +1605,6 @@
 			(justify right bottom)
 		)
 		(uuid "be35043d-cdf2-411b-bf7c-e4f8f90d438b")
-	)
-	(label "E_n"
-		(at 48.26 109.22 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c356334a-7ae4-4ed5-bf86-f287064fa848")
-	)
-	(label "E_p"
-		(at 48.26 106.68 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c6b2bd75-f347-4cc3-90ac-2253bbd986fa")
 	)
 	(label "S2_P"
 		(at 93.98 106.68 180)
@@ -1838,95 +1678,6 @@
 			(justify left)
 		)
 		(uuid "a870e996-bf70-480d-9e56-8ec0da1dc9d2")
-	)
-	(symbol
-		(lib_id "Connector_Generic:Conn_01x05")
-		(at 38.1 111.76 180)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "353cbb00-254e-4216-8dd2-728f9dbc777e")
-		(property "Reference" "J402"
-			(at 38.1 100.33 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Conn_01x05"
-			(at 38.1 102.87 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal"
-			(at 38.1 111.76 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 38.1 111.76 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 38.1 111.76 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "7ffd1908-368b-4e28-b562-893d5b3de3d7")
-		)
-		(pin "2"
-			(uuid "c6f1bd1d-4f64-46da-9221-e44a0bde978a")
-		)
-		(pin "3"
-			(uuid "62177a70-e2bf-4e6d-95df-4f9c16640f3f")
-		)
-		(pin "4"
-			(uuid "b6bd71d8-07cc-4669-920c-180c89dd97df")
-		)
-		(pin "5"
-			(uuid "976c22a0-4b03-41c1-be79-b3ce201ca97e")
-		)
-		(instances
-			(project "s3_sensor_board"
-				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-					(reference "J402")
-					(unit 1)
-				)
-			)
-		)
 	)
 	(symbol
 		(lib_id "Device:C_Small")
@@ -2083,88 +1834,6 @@
 			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
 					(reference "#PWR0403")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C_Small")
-		(at 58.42 172.72 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "641aa226-f378-4e4c-8766-4063595ccbd4")
-		(property "Reference" "C406"
-			(at 60.96 171.4563 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "DNP"
-			(at 60.96 173.9963 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 58.42 172.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 58.42 172.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 58.42 172.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "092e475e-8c25-4549-bf96-64bab44a6272")
-		)
-		(pin "2"
-			(uuid "b2660ad4-afdf-491c-98cc-e1efc70bc670")
-		)
-		(instances
-			(project "s3_sensor_board"
-				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d/7fbfe679-89cc-4470-a0bc-43ba7c1b816f"
-					(reference "C406")
 					(unit 1)
 				)
 			)
