@@ -11142,12 +11142,12 @@
 	)
 	(hierarchical_label "DATA_READY"
 		(shape input)
-		(at 100.33 115.57 180)
+		(at 152.4 104.14 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
 		(uuid "923fc1f8-bd20-4227-bec1-d07f08e2fe7a")
 	)

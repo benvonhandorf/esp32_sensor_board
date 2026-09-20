@@ -2868,7 +2868,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical"
 			(at 38.1 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -2891,6 +2891,17 @@
 			)
 		)
 		(property "Description" ""
+			(at 38.1 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" ""
 			(at 38.1 91.44 0)
 			(hide yes)
 			(show_name no)
