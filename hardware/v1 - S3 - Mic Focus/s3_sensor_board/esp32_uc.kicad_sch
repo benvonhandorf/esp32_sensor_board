@@ -6851,6 +6851,12 @@
 		(uuid "db0d49ab-eea3-4821-8e5a-46c114e926c5")
 	)
 	(junction
+		(at 49.53 132.08)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "dc5a40a1-73b8-4e3e-936c-0738bb9636ba")
+	)
+	(junction
 		(at 208.28 125.73)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -7239,6 +7245,16 @@
 			(type default)
 		)
 		(uuid "2720385f-3a99-4efd-ae8b-0bdb9fb0e4b0")
+	)
+	(wire
+		(pts
+			(xy 49.53 132.08) (xy 49.53 133.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "274a2637-7eaf-4688-8aa5-ebd27c809031")
 	)
 	(wire
 		(pts
@@ -8172,7 +8188,7 @@
 	)
 	(wire
 		(pts
-			(xy 49.53 130.81) (xy 49.53 133.35)
+			(xy 49.53 130.81) (xy 49.53 132.08)
 		)
 		(stroke
 			(width 0)
@@ -8539,6 +8555,16 @@
 			(type default)
 		)
 		(uuid "b828b7db-9a5c-439c-9ef1-81809cf83212")
+	)
+	(wire
+		(pts
+			(xy 46.99 132.08) (xy 49.53 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b8e83812-0a9f-4b4b-ac5b-9356cabec794")
 	)
 	(wire
 		(pts
@@ -9925,6 +9951,16 @@
 		)
 		(uuid "58586501-104d-46c1-aaa5-cad104c4cd1a")
 	)
+	(label "RF_ANT_CONN"
+		(at 46.99 132.08 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5c921d7a-48dd-4b2d-bf01-962b43e07a95")
+	)
 	(label "SD_DET"
 		(at 237.49 158.75 180)
 		(effects
@@ -10054,6 +10090,16 @@
 			(justify left bottom)
 		)
 		(uuid "8b2172d9-e3ba-462b-b288-43ca7b39ced6")
+	)
+	(label "RF_ANT_CHIP"
+		(at 49.53 146.05 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "92cf254e-2d33-4b6f-b20c-3f88c5311cfa")
 	)
 	(label "USB_P"
 		(at 251.46 97.79 0)
@@ -10455,76 +10501,6 @@
 			(justify left)
 		)
 		(uuid "fa5a3769-9516-4313-97e4-7d77052bee0c")
-	)
-	(netclass_flag ""
-		(length 2.54)
-		(shape round)
-		(at 49.53 146.05 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "385d0204-cffa-4fb7-8522-f5134fb57db0")
-		(property "Netclass" "50ohm"
-			(at 50.2285 148.59 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Component Class" ""
-			(at -17.78 -20.32 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-			)
-		)
-	)
-	(netclass_flag ""
-		(length 2.54)
-		(shape round)
-		(at 49.53 132.08 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "49a88570-7be6-4dcd-a3cd-0a4d8bbc314c")
-		(property "Netclass" "50ohm"
-			(at 46.99 131.3815 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Component Class" ""
-			(at -17.78 -34.29 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-			)
-		)
 	)
 	(symbol
 		(lib_id "Device:C_Small")

@@ -1983,18 +1983,6 @@
 		(uuid "006f4c8d-2dc0-4c46-9d32-16464fbc861d")
 	)
 	(junction
-		(at 213.36 116.84)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "14701f88-206c-4e68-a250-3e4670ef5eaa")
-	)
-	(junction
-		(at 215.9 127)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "6fde8379-b9ff-46ff-91f9-b2bce591b7a3")
-	)
-	(junction
 		(at 148.59 62.23)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2052,7 +2040,7 @@
 	)
 	(wire
 		(pts
-			(xy 205.74 116.84) (xy 213.36 116.84)
+			(xy 205.74 116.84) (xy 215.9 116.84)
 		)
 		(stroke
 			(width 0)
@@ -2142,16 +2130,6 @@
 	)
 	(wire
 		(pts
-			(xy 213.36 116.84) (xy 215.9 116.84)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "240c428a-ce21-4b32-891e-f3dd79eeb1ba")
-	)
-	(wire
-		(pts
 			(xy 215.9 116.84) (xy 215.9 106.68)
 		)
 		(stroke
@@ -2199,16 +2177,6 @@
 			(type default)
 		)
 		(uuid "4b740042-a48d-484d-98b1-a32bfd702fb2")
-	)
-	(wire
-		(pts
-			(xy 215.9 137.16) (xy 220.98 137.16)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4f19026e-8041-40d2-be4b-10d097482e7a")
 	)
 	(wire
 		(pts
@@ -2322,16 +2290,6 @@
 	)
 	(wire
 		(pts
-			(xy 215.9 127) (xy 215.9 137.16)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7731266d-fcc9-4793-ab55-60037745d437")
-	)
-	(wire
-		(pts
 			(xy 138.43 115.57) (xy 143.51 115.57)
 		)
 		(stroke
@@ -2422,16 +2380,6 @@
 	)
 	(wire
 		(pts
-			(xy 213.36 116.84) (xy 213.36 127)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a21b57f7-26ac-43a4-b7d8-a909806864c9")
-	)
-	(wire
-		(pts
 			(xy 140.97 105.41) (xy 143.51 105.41)
 		)
 		(stroke
@@ -2502,16 +2450,6 @@
 	)
 	(wire
 		(pts
-			(xy 213.36 127) (xy 215.9 127)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c91af67d-c481-41bb-966c-851c7e6fa722")
-	)
-	(wire
-		(pts
 			(xy 181.61 29.21) (xy 184.15 29.21)
 		)
 		(stroke
@@ -2529,16 +2467,6 @@
 			(type default)
 		)
 		(uuid "cd773bf7-b338-42c4-8f2d-b91e77bd01a8")
-	)
-	(wire
-		(pts
-			(xy 215.9 127) (xy 220.98 127)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cdfa61c9-7aa6-4984-b91a-1b0b88d256dc")
 	)
 	(wire
 		(pts
@@ -3874,186 +3802,6 @@
 			(project "s3_sensor_board"
 				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d"
 					(reference "#PWR0102")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Mechanical:MountingHole_Pad")
-		(at 220.98 124.46 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5d1425cf-bf5b-49af-b252-8f67c3e43a0a")
-		(property "Reference" "H103"
-			(at 223.52 121.92 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "MountingHole_Pad"
-			(at 223.52 124.46 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "MountingHole:MountingHole_2.2mm_M2_DIN965_Pad"
-			(at 220.98 124.46 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 220.98 124.46 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 220.98 124.46 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" ""
-			(at 220.98 124.46 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "00783063-e8c7-4a46-9dac-3e6ec2be5438")
-		)
-		(instances
-			(project "s3_sensor_board"
-				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d"
-					(reference "H103")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Mechanical:MountingHole_Pad")
-		(at 220.98 134.62 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7f803c21-70b6-4ba1-ad1b-08a7eeacbc3e")
-		(property "Reference" "H104"
-			(at 223.52 132.08 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "MountingHole_Pad"
-			(at 223.52 134.62 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "MountingHole:MountingHole_2.2mm_M2_DIN965_Pad"
-			(at 220.98 134.62 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 220.98 134.62 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 220.98 134.62 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" ""
-			(at 220.98 134.62 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "59a94ddb-fdf3-4d24-95b8-116d22d61d64")
-		)
-		(instances
-			(project "s3_sensor_board"
-				(path "/d76badc5-1f0d-4fe6-889f-ca56408e093d"
-					(reference "H104")
 					(unit 1)
 				)
 			)
