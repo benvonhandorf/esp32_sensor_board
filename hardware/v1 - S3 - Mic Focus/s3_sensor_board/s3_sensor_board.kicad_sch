@@ -1955,6 +1955,16 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "${BOARD_DATE}"
+		(exclude_from_sim no)
+		(at 213.614 193.294 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "8412dc52-3fba-49e7-9521-c8d9bc3b4690")
+	)
 	(text "Goals:\n- ESP32-S3 based\n- Support for a 12V LiFePo4 solar system in power and power measurement\n- Optional support for a 1S LiPo cell with an off-board \n- Support for an optional load cell measurement\n- Support for a micro-SD card for logging\n- Support for 8 channels of PDM microphones\n- Support for touch sensors"
 		(exclude_from_sim no)
 		(at 203.2 33.02 0)
@@ -1965,6 +1975,16 @@
 			(justify left bottom)
 		)
 		(uuid "ad50162e-5b79-4cfa-86a6-43d35f6d3fc7")
+	)
+	(text "${BOARD_NAME}"
+		(exclude_from_sim no)
+		(at 189.23 189.738 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "b9d43a3b-c0d2-4746-8da7-adceb7a3b992")
 	)
 	(text "Voltage divider to measure Vin\nIntended to keep the 3V to 15V range\nin the linear region of the ESP32-S3's ADC"
 		(exclude_from_sim no)
@@ -2017,6 +2037,15 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ee1ff714-22e0-4cf4-a602-495c75c7a9e7")
+	)
+	(bus_entry
+		(at 191.77 187.96)
+		(size 2.54 2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e0eb0c6a-5e9c-4426-a732-3a7370c0d0b7")
 	)
 	(wire
 		(pts

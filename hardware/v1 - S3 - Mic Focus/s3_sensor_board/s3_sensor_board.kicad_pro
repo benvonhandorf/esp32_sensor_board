@@ -792,7 +792,12 @@
       "Temp and Humidity Sensor"
     ]
   ],
-  "text_variables": {},
+  "text_variables": {
+    "BOARD_DATE": "2026-Sep-25",
+    "BOARD_NAME": "Sinn",
+    "BOARD_REV": "v0",
+    "OWNER": "AB4EN"
+  },
   "tuning_profiles": {
     "meta": {
       "version": 0

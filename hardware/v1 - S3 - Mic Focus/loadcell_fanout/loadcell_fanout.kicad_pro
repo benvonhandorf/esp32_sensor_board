@@ -142,7 +142,7 @@
         "max_error": 0.005,
         "min_clearance": 0.0,
         "min_connection": 0.0,
-        "min_copper_edge_clearance": 0.5,
+        "min_copper_edge_clearance": 0.2,
         "min_groove_width": 0.0,
         "min_hole_clearance": 0.25,
         "min_hole_to_hole": 0.25,
@@ -661,7 +661,7 @@
         "uuid": "78485e23-ae8c-4be8-ac85-5e6985f8e584"
       }
     ],
-    "used_designators": "H1-4,H101-104,U1-3,U401-403,C1-8,C401-407,J1-2,J104,J401,FB1,FB301,#PWR1-24,#PWR107,#PWR109-110,#PWR401-418",
+    "used_designators": "H1-4,H101-104,U1-3,U401-403,C1-8,C401-407,J1-3,J104,J401,FB1,FB301,#PWR1-24,#PWR107,#PWR109-110,#PWR401-418",
     "variants": []
   },
   "sheets": [
@@ -670,7 +670,12 @@
       "Root"
     ]
   ],
-  "text_variables": {},
+  "text_variables": {
+    "BOARD_DATE": "2026-Sep-25",
+    "BOARD_NAME": "Vekt",
+    "BOARD_REV": "v0",
+    "OWNER": "AB4EN"
+  },
   "tuning_profiles": {
     "meta": {
       "version": 0
